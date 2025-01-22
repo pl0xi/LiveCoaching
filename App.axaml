@@ -11,6 +11,8 @@
         <Styles>
             <Style Selector="Window">
                 <Setter Property="Background" Value="#323232" />
+                <Setter Property="MinHeight" Value="720" />
+                <Setter Property="MinWidth" Value="1280" />
             </Style>
         </Styles>
         <FluentTheme />
