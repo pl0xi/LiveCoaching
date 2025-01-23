@@ -43,6 +43,8 @@ public class UIClientManager {
                 var appPortMatch = Regex.Match(commandLine, @"--app-port=([0-9]*)");
                 var authTokenMatch = Regex.Match(commandLine, @"--remoting-auth-token=([\w-]*)");
 
+                if (!appPortMatch.Success) return false;
+
                 baseClientUrl = "https://127.0.0.1:" + appPortMatch;
 
                 byte[] authByte = Encoding.ASCII.GetBytes("riot:" + authTokenMatch);
@@ -51,7 +53,5 @@ public class UIClientManager {
         }
 
         return true;
-
-        // TODO: Make function return false, if no process is found.
     }
 }
