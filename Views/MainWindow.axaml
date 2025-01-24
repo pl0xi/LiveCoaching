@@ -16,11 +16,24 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
+    <Window.Styles>
+        <Style Selector="TabControl WrapPanel">
+            <Setter Property="Background" Value="#282828" />
+        </Style>
+
+        <Style Selector="StackPanel">
+            <Setter Property="Margin" Value="50 40 0 0" />
+        </Style>
+    </Window.Styles>
+
     <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left">
         <TabItem Header="Home">
             <StackPanel DataContext="{Binding HomeViewModel}">
-                <TextBlock>
+                <TextBlock FontSize="48">
                     Welcome to LiveCoaching!
+                </TextBlock>
+                <TextBlock FontSize="24">
+                    Waiting on League of Legends to start...
                 </TextBlock>
             </StackPanel>
         </TabItem>
