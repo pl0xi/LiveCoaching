@@ -29,7 +29,7 @@
     <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left">
         <TabItem Header="Home">
             <StackPanel DataContext="{Binding HomeViewModel}">
-                <TextBlock FontSize="48">
+                <TextBlock FontFamily="{StaticResource NotoSansFont}" FontSize="48">
                     Welcome to LiveCoaching!
                 </TextBlock>
                 <TextBlock FontSize="24">

@@ -20,6 +20,7 @@
     </Application.Styles>
 
     <Application.Resources>
-        <FontFamily x:Key="NotoSans">avares://LiveCoaching/Assets/Fonts#NotoSans</FontFamily>
+        <!--  Make it default font in app  -->
+        <FontFamily x:Key="NotoSansFont">avares://LiveCoaching/Assets/Fonts#Noto Sans</FontFamily>
     </Application.Resources>
 </Application>
