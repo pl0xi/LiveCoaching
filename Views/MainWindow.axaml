@@ -33,10 +33,30 @@
                     Welcome to LiveCoaching!
                 </TextBlock>
                 <TextBlock FontSize="24">
-                    Waiting on League of Legends to start...
+                    (TODO DASHHOARD)
                 </TextBlock>
             </StackPanel>
         </TabItem>
-        <!--  TODO: Add changelog tab  -->
+
+        <TabItem Header="Game">
+            <StackPanel DataContext="{Binding GameViewModel}">
+                <TextBlock
+                    DataContext="{Binding title}"
+                    FontFamily="{StaticResource NotoSansFont}"
+                    FontSize="48" />
+            </StackPanel>
+        </TabItem>
+
+        <!--  TODO: Implement guides page  -->
+        <TabItem Header="Guides" />
+
+        <!--  TODO: Implement about page  -->
+        <TabItem Header="About" />
+
+        <!--  TODO: Implement settings page  -->
+        <TabItem Header="Settings" />
+
+        <!--  TODO: Implemenet changelog page  -->
+        <TabItem Header="Changelog" />
     </TabControl>
 </Window>
