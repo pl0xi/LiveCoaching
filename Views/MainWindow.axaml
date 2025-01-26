@@ -28,13 +28,8 @@
 
     <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left">
         <TabItem Header="Home">
-            <StackPanel DataContext="{Binding HomeViewModel}">
-                <TextBlock FontFamily="{StaticResource NotoSansFont}" FontSize="48">
-                    Welcome to LiveCoaching!
-                </TextBlock>
-                <TextBlock FontSize="24">
-                    (TODO DASHHOARD)
-                </TextBlock>
+            <StackPanel>
+                <TextBlock FontFamily="{StaticResource NotoSansFont}" Text="{Binding HomeViewModel.leagueName}" />
             </StackPanel>
         </TabItem>
 

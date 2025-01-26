@@ -1,16 +1,16 @@
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System;
 using System.Diagnostics;
 using System.Text;
+using System.Net.Http;
 
 public class LeagueUiClientManager
 {
-    private string? baseClientUrl = null;
     private PlatformID systemOS = Environment.OSVersion.Platform;
-    private string auth = string.Empty;
+    private static HttpClient? sharedClient;
+    private static bool isClientOpen = false;
 
-    private bool isClientOpen()
+    public void setClientStatus()
     {
         ProcessStartInfo startInfo;
 
@@ -24,7 +24,6 @@ public class LeagueUiClientManager
                 CreateNoWindow = true,
                 RedirectStandardOutput = true
             };
-
         }
         else if (systemOS == PlatformID.Unix)
         {
@@ -45,31 +44,52 @@ public class LeagueUiClientManager
 
         using (var terminalOrCMD = Process.Start(startInfo))
         {
-            if (terminalOrCMD == null) return false;
+            if (terminalOrCMD == null) return;
             using (var reader = terminalOrCMD.StandardOutput)
             {
                 string commandLine = reader.ReadToEnd();
 
+                if (Regex.Match(commandLine, "is not recognized as an internal or external command").Success && systemOS == PlatformID.Win32NT)
+                {
+                    throw new Exception("System is not supported");
+                    // In Windows 11, wmic is deprecated use: (Get-CimInstance Win32_Process -Filter "Name='LeagueClientUx.exe'").CommandLine
+                    // TODO: Implement with Get-CimInstance
+                }
+
                 var appPortMatch = Regex.Match(commandLine, @"--app-port=([0-9]*)");
                 var authTokenMatch = Regex.Match(commandLine, @"--remoting-auth-token=([\w-]*)");
 
-                if (!appPortMatch.Success) return false;
-
-                baseClientUrl = "https://127.0.0.1:" + appPortMatch;
+                if (!appPortMatch.Success) return;
 
                 byte[] authByte = Encoding.ASCII.GetBytes("riot:" + authTokenMatch);
-                auth = Convert.ToBase64String(authByte);
-            }
-            ;
-        }
+                string auth = Convert.ToBase64String(authByte);
 
-        return true;
+                sharedClient = new HttpClient()
+                {
+                    BaseAddress = new Uri("https://127.0.0.1:" + appPortMatch),
+                };
+
+                sharedClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", auth);
+
+                isClientOpen = true;
+            }
+        }
     }
 
+    // TODO: Implement
+    public string? getLeagueName()
+    {
+        throw new Exception("Not Implemented");
+    }
+
+    // TODO: Implement
     public bool isInChampionSelect()
     {
-        if (!isClientOpen()) return false;
-
         throw new Exception("Not Implemented");
+    }
+
+    public bool getIsClientOpen()
+    {
+        return isClientOpen;
     }
 }
