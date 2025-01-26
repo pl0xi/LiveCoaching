@@ -29,7 +29,7 @@
     <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left">
         <TabItem Header="Home">
             <StackPanel>
-                <TextBlock FontFamily="{StaticResource NotoSansFont}" Text="{Binding HomeViewModel.leagueName}" />
+                <TextBlock FontFamily="{StaticResource NotoSansFont}" FontSize="48" Text="{Binding HomeViewModel.leagueName}" />
             </StackPanel>
         </TabItem>
 

@@ -1,26 +1,34 @@
 ﻿using System;
-using System.Reactive.Linq;
+using System.Threading;
 
 namespace LiveCoaching.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
     private readonly LeagueUiClientManager _leagueUiClientManager = new LeagueUiClientManager();
+    private Timer _timer;
 
     public MainWindowViewModel()
     {
-        Observable.Generate(
-         initialState: _leagueUiClientManager.getIsClientOpen(),
-         condition: _ => true,
-         iterate: _ =>
-         {
-             _leagueUiClientManager.setClientStatus();
-             return _leagueUiClientManager.getIsClientOpen();
-         },
-         resultSelector: state => state,
-         timeSelector: state => state ? TimeSpan.FromSeconds(10) : TimeSpan.FromSeconds(2)
-            )
-         .Subscribe();
+        StartPeriodTimer();
+    }
+
+
+    public void StartPeriodTimer()
+    {
+        _timer = new Timer(_ => UpdateClientStatus(), null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+    }
+
+    private void UpdateClientStatus()
+    {
+        _leagueUiClientManager.SetClientStatus();
+
+        System.Diagnostics.Debug.WriteLine("Checking Client Status");
+
+        if (_leagueUiClientManager.GetIsClientOpen())
+        {
+            _timer.Dispose();
+        }
     }
 
     public HomeViewModel HomeViewModel { get; } = new HomeViewModel();

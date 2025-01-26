@@ -6,6 +6,14 @@ public class HomeViewModel : ViewModelBase
 
     public string leagueName
     {
-        get { return "Live Coaching"; }
+        get
+        {
+            if (_leagueUiClientManager.GetIsClientOpen())
+            {
+                return "League Username";
+            }
+
+            return "Waiting for league client";
+        }
     }
 }

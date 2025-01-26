@@ -1,8 +1,8 @@
-using System.Text.RegularExpressions;
 using System;
 using System.Diagnostics;
-using System.Text;
 using System.Net.Http;
+using System.Text;
+using System.Text.RegularExpressions;
 
 public class LeagueUiClientManager
 {
@@ -10,7 +10,7 @@ public class LeagueUiClientManager
     private static HttpClient? sharedClient;
     private static bool isClientOpen = false;
 
-    public void setClientStatus()
+    public void SetClientStatus()
     {
         ProcessStartInfo startInfo;
 
@@ -56,17 +56,18 @@ public class LeagueUiClientManager
                     // TODO: Implement with Get-CimInstance
                 }
 
+                // TODO: Change so app-port and * dosent get used
                 var appPortMatch = Regex.Match(commandLine, @"--app-port=([0-9]*)");
                 var authTokenMatch = Regex.Match(commandLine, @"--remoting-auth-token=([\w-]*)");
 
                 if (!appPortMatch.Success) return;
 
-                byte[] authByte = Encoding.ASCII.GetBytes("riot:" + authTokenMatch);
+                byte[] authByte = Encoding.ASCII.GetBytes("riot:" + authTokenMatch.Groups[1].Value);
                 string auth = Convert.ToBase64String(authByte);
 
                 sharedClient = new HttpClient()
                 {
-                    BaseAddress = new Uri("https://127.0.0.1:" + appPortMatch),
+                    BaseAddress = new Uri("https://127.0.0.1:" + appPortMatch.Groups[1].Value),
                 };
 
                 sharedClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", auth);
@@ -77,18 +78,18 @@ public class LeagueUiClientManager
     }
 
     // TODO: Implement
-    public string? getLeagueName()
+    public string? GetLeagueName()
     {
         throw new Exception("Not Implemented");
     }
 
     // TODO: Implement
-    public bool isInChampionSelect()
+    public bool IsInChampionSelect()
     {
         throw new Exception("Not Implemented");
     }
 
-    public bool getIsClientOpen()
+    public bool GetIsClientOpen()
     {
         return isClientOpen;
     }
