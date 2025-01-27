@@ -1,16 +1,20 @@
+using LiveCoaching.Types;
 using System;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-public class LeagueUiClientManager
+namespace LiveCoaching.Services;
+public static class LeagueUiClientManager
 {
-    private PlatformID systemOS = Environment.OSVersion.Platform;
+    private static readonly PlatformID systemOS = Environment.OSVersion.Platform;
     private static HttpClient? sharedClient;
     private static bool isClientOpen = false;
 
-    public void SetClientStatus()
+    public static void SetClientStatus()
     {
         ProcessStartInfo startInfo;
 
@@ -65,31 +69,42 @@ public class LeagueUiClientManager
                 byte[] authByte = Encoding.ASCII.GetBytes("riot:" + authTokenMatch.Groups[1].Value);
                 string auth = Convert.ToBase64String(authByte);
 
-                sharedClient = new HttpClient()
+                HttpClientHandler handler = new HttpClientHandler()
                 {
-                    BaseAddress = new Uri("https://127.0.0.1:" + appPortMatch.Groups[1].Value),
+                    ClientCertificateOptions = ClientCertificateOption.Manual,
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
                 };
 
-                sharedClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", auth);
+                sharedClient = new HttpClient(handler)
+                {
+                    BaseAddress = new Uri("https://127.0.0.1:" + appPortMatch.Groups[1].Value),
+                    Timeout = TimeSpan.FromSeconds(5),
+                    DefaultRequestHeaders =
+                    {
+                        { "Authorization", "Basic " + auth },
+                    }
+                };
 
                 isClientOpen = true;
             }
         }
     }
 
+    public static async Task<string?> GetLeagueName()
+    {
+        if (sharedClient == null) return "Failed to get username";
+        var response = await sharedClient.GetFromJsonAsync<Summoner>("lol-summoner/v1/current-summoner");
+
+        return response?.gameName;
+    }
+
     // TODO: Implement
-    public string? GetLeagueName()
+    public static bool IsInChampionSelect()
     {
         throw new Exception("Not Implemented");
     }
 
-    // TODO: Implement
-    public bool IsInChampionSelect()
-    {
-        throw new Exception("Not Implemented");
-    }
-
-    public bool GetIsClientOpen()
+    public static bool GetIsClientOpen()
     {
         return isClientOpen;
     }

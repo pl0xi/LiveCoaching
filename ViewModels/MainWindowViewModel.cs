@@ -1,12 +1,13 @@
-﻿using System;
+﻿using LiveCoaching.Services;
+using ReactiveUI;
+using System;
 using System.Threading;
 
 namespace LiveCoaching.ViewModels;
 
-public class MainWindowViewModel : ViewModelBase
+public class MainWindowViewModel : ReactiveObject
 {
-    private readonly LeagueUiClientManager _leagueUiClientManager = new LeagueUiClientManager();
-    private Timer _timer;
+    private Timer? _timer;
 
     public MainWindowViewModel()
     {
@@ -21,13 +22,12 @@ public class MainWindowViewModel : ViewModelBase
 
     private void UpdateClientStatus()
     {
-        _leagueUiClientManager.SetClientStatus();
+        LeagueUiClientManager.SetClientStatus();
 
-        System.Diagnostics.Debug.WriteLine("Checking Client Status");
-
-        if (_leagueUiClientManager.GetIsClientOpen())
+        if (LeagueUiClientManager.GetIsClientOpen())
         {
-            _timer.Dispose();
+            _ = HomeViewModel.UpdateLeagueName();
+            _timer?.Dispose();
         }
     }
 

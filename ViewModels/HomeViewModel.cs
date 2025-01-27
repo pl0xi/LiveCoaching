@@ -1,19 +1,25 @@
+using LiveCoaching.Services;
+using ReactiveUI;
+using System.Threading.Tasks;
+
 namespace LiveCoaching.ViewModels;
 
-public class HomeViewModel : ViewModelBase
+public class HomeViewModel : ReactiveObject
 {
-    private readonly LeagueUiClientManager _leagueUiClientManager = new LeagueUiClientManager();
+    private string _leagueName = "Waiting on league client";
 
-    public string leagueName
+    public string LeagueName
     {
-        get
-        {
-            if (_leagueUiClientManager.GetIsClientOpen())
-            {
-                return "League Username";
-            }
+        get => _leagueName;
+        set => this.RaiseAndSetIfChanged(ref _leagueName, value);
+    }
 
-            return "Waiting for league client";
+    public async Task UpdateLeagueName()
+    {
+        if (LeagueUiClientManager.GetIsClientOpen())
+        {
+            var leagueName = await LeagueUiClientManager.GetLeagueName();
+            LeagueName = leagueName ?? "Failed to get league display name";
         }
     }
 }
