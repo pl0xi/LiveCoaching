@@ -1,6 +1,7 @@
 <Window
     x:Class="LiveCoaching.Views.MainWindow"
     xmlns="https://github.com/avaloniaui"
+    xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -28,17 +29,23 @@
 
     <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left">
         <TabItem Header="Home">
-            <StackPanel>
-                <TextBlock FontFamily="{StaticResource NotoSansFont}" FontSize="48" Text="{Binding HomeViewModel.LeagueName}" />
-            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="80" VerticalAlignment="Top">
+				<Image VerticalAlignment="Top" Height="80" Width="80" asyncImageLoader:ImageLoader.Source="{Binding HomeViewModel.LeagueUserIcon}" />
+				<StackPanel Margin="15, 0, 0, 0" VerticalAlignment="Bottom" Spacing="-10">
+					<TextBlock FontFamily="{StaticResource NotoSansFont}" FontSize="18" Text="{Binding HomeViewModel.LeaugeSummonerLevel}" />
+				    <TextBlock FontFamily="{StaticResource NotoSansFont}" >
+					    <Run FontSize="32" Text="{Binding HomeViewModel.LeagueGameName}" />
+					    <Run FontSize="18" Text="{Binding HomeViewModel.LeagueTagLine}" Foreground="Gray"/>
+				    </TextBlock>
+				</StackPanel>
+			</StackPanel>
         </TabItem>
 
         <TabItem Header="Game">
             <StackPanel DataContext="{Binding GameViewModel}">
                 <TextBlock
                     DataContext="{Binding title}"
-                    FontFamily="{StaticResource NotoSansFont}"
-                    FontSize="48" />
+                    FontFamily="{StaticResource NotoSansFont}" FontSize="48"/>
             </StackPanel>
         </TabItem>
 

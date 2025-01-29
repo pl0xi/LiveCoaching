@@ -60,7 +60,6 @@ public static class LeagueUiClientManager
                     // TODO: Implement with Get-CimInstance
                 }
 
-                // TODO: Change so app-port and * dosent get used
                 var appPortMatch = Regex.Match(commandLine, @"--app-port=([0-9]*)");
                 var authTokenMatch = Regex.Match(commandLine, @"--remoting-auth-token=([\w-]*)");
 
@@ -69,7 +68,7 @@ public static class LeagueUiClientManager
                 byte[] authByte = Encoding.ASCII.GetBytes("riot:" + authTokenMatch.Groups[1].Value);
                 string auth = Convert.ToBase64String(authByte);
 
-                HttpClientHandler handler = new HttpClientHandler()
+                HttpClientHandler handler = new()
                 {
                     ClientCertificateOptions = ClientCertificateOption.Manual,
                     ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
@@ -90,12 +89,12 @@ public static class LeagueUiClientManager
         }
     }
 
-    public static async Task<string?> GetLeagueName()
+    public static async Task<Summoner?> GetLeagueSummoner()
     {
-        if (sharedClient == null) return "Failed to get username";
+        if (sharedClient == null) return null;
         var response = await sharedClient.GetFromJsonAsync<Summoner>("lol-summoner/v1/current-summoner");
 
-        return response?.gameName;
+        return response;
     }
 
     // TODO: Implement
