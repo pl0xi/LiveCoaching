@@ -30,22 +30,22 @@ public class HomeViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _leagueTagLine, value);
     }
 
-    public string LeaugeSummonerLevel
+    public string LeagueSummonerLevel
     {
         get => _leagueSummonerLevel;
         set => this.RaiseAndSetIfChanged(ref _leagueSummonerLevel, value);
     }
 
 
-    public async Task UpdateLeagueSummoner()
+    public async Task UpdateLeagueSummonerAsync()
     {
         if (LeagueUiClientManager.GetIsClientOpen())
         {
             Summoner? leagueSummoner = await LeagueUiClientManager.GetLeagueSummoner();
             LeagueGameName = leagueSummoner?.gameName ?? "Failed to get league display name";
-            LeagueTagLine = leagueSummoner?.tagLine != null ? "#" + leagueSummoner?.tagLine : "";
-            LeaugeSummonerLevel = leagueSummoner?.summonerLevel != null ? "LEVEL " + leagueSummoner?.summonerLevel.ToString() : "0";
-            LeagueUserIcon = leagueSummoner?.profileIconId != null ? "https://ddragon.leagueoflegends.com/cdn/15.2.1/img/profileicon/" + leagueSummoner?.profileIconId + ".png" : "https://placehold.co/50";
+            LeagueTagLine = leagueSummoner?.tagLine != null ? $"#{leagueSummoner.tagLine}" : "";
+            LeagueSummonerLevel = leagueSummoner?.summonerLevel != null ? $"LEVEL {leagueSummoner.summonerLevel}" : "0";
+            LeagueUserIcon = leagueSummoner?.profileIconId != null ? $"https://ddragon.leagueoflegends.com/cdn/15.2.1/img/profileicon/{leagueSummoner.profileIconId}.png" : "https://placehold.co/50";
         }
     }
 }

@@ -26,7 +26,7 @@ public class MainWindowViewModel : ReactiveObject
 
         if (LeagueUiClientManager.GetIsClientOpen())
         {
-            _ = HomeViewModel.UpdateLeagueSummoner();
+            _ = HomeViewModel.UpdateLeagueSummonerAsync();
             _timer?.Dispose();
         }
     }
