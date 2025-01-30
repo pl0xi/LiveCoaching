@@ -4,3 +4,10 @@ LiveCoaching is a cross-platform desktop application for League of legends that 
 # Technologies
 - Avalonia UI
 - .NET 9
+
+# Current Features
+- Simple profile display
+
+# Planned Features
+- Match history display 
+- Live data overlay
