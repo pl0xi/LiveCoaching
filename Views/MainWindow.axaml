@@ -27,8 +27,11 @@
         </Style>
     </Window.Styles>
 
-    <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left">
-        <TabItem Header="Home">
+    <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left" >
+        <TabItem>
+            <TabItem.Header>
+                <Image RenderOptions.BitmapInterpolationMode="MediumQuality" Source="avares://LiveCoaching/Assets/TabIcons/home.png" Width="15" Height="15"/>
+            </TabItem.Header>
             <StackPanel Orientation="Horizontal" Height="80" VerticalAlignment="Top">
 				<Image IsVisible="{Binding HomeViewModel.LeagueDataLoaded}" VerticalAlignment="Top" Height="80" Width="80" asyncImageLoader:ImageLoader.Source="{Binding HomeViewModel.LeagueUserIcon}" />
 				<StackPanel Margin="15, 0, 0, 0" VerticalAlignment="Bottom" Spacing="-10">
@@ -41,7 +44,10 @@
 			</StackPanel>
         </TabItem>
 
-        <TabItem Header="Game">
+        <TabItem> 
+            <TabItem.Header>
+                <Image Source="avares://LiveCoaching/Assets/avalonia-logo.ico" Width="25" Height="25"/>
+            </TabItem.Header>
             <StackPanel DataContext="{Binding GameViewModel}">
                 <TextBlock
                     DataContext="{Binding title}"
@@ -49,16 +55,16 @@
             </StackPanel>
         </TabItem>
 
-        <!--  TODO: Implement guides page  -->
-        <TabItem Header="Guides" />
+        <!--  TODO: Implement guides page  
+        <TabItem Header="Guides" />-->
 
-        <!--  TODO: Implement about page  -->
-        <TabItem Header="About" />
+        <!--  TODO: Implement about page  
+        <TabItem Header="About" /> -->
 
-        <!--  TODO: Implement settings page  -->
-        <TabItem Header="Settings" />
+        <!--  TODO: Implement settings page  
+        <TabItem Header="Settings" /> -->
 
-        <!--  TODO: Implemenet changelog page  -->
-        <TabItem Header="Changelog" />
+        <!--  TODO: Implemenet changelog page  
+        <TabItem Header="Changelog" /> -->
     </TabControl>
 </Window>

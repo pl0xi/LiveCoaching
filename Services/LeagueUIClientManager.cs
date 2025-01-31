@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace LiveCoaching.Services;
 public static class LeagueUiClientManager
 {
-    private static readonly PlatformID systemOS = Environment.OSVersion.Platform;
+    private static readonly PlatformID SystemOS = Environment.OSVersion.Platform;
     private static HttpClient? sharedClient;
     private static bool isClientOpen = false;
     private static readonly AsyncPolicy RetryPolicy = Policy
@@ -22,7 +22,7 @@ public static class LeagueUiClientManager
     {
         ProcessStartInfo startInfo;
 
-        if (systemOS == PlatformID.Win32NT)
+        if (SystemOS == PlatformID.Win32NT)
         {
             startInfo = new ProcessStartInfo
             {
@@ -33,7 +33,7 @@ public static class LeagueUiClientManager
                 RedirectStandardOutput = true
             };
         }
-        else if (systemOS == PlatformID.Unix)
+        else if (SystemOS == PlatformID.Unix)
         {
             startInfo = new ProcessStartInfo
             {
@@ -50,14 +50,14 @@ public static class LeagueUiClientManager
             throw new Exception("Not Supported OS");
         }
 
-        using (var terminalOrCMD = Process.Start(startInfo))
+        using (var terminalOrCmd = Process.Start(startInfo))
         {
-            if (terminalOrCMD == null) return;
-            using (var reader = terminalOrCMD.StandardOutput)
+            if (terminalOrCmd == null) return;
+            using (var reader = terminalOrCmd.StandardOutput)
             {
                 string commandLine = reader.ReadToEnd();
 
-                if (Regex.Match(commandLine, "is not recognized as an internal or external command").Success && systemOS == PlatformID.Win32NT)
+                if (Regex.Match(commandLine, "is not recognized as an internal or external command").Success && SystemOS == PlatformID.Win32NT)
                 {
                     throw new Exception("System is not supported");
                     // In Windows 11, wmic is deprecated use: (Get-CimInstance Win32_Process -Filter "Name='LeagueClientUx.exe'").CommandLine
