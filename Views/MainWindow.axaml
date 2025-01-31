@@ -35,7 +35,7 @@
 					<TextBlock IsVisible="{Binding HomeViewModel.LeagueDataLoaded}" FontFamily="{StaticResource NotoSansFont}" FontSize="18" Text="{Binding HomeViewModel.LeagueSummonerLevel}" />
 				    <TextBlock FontFamily="{StaticResource NotoSansFont}" >
 					    <Run FontSize="32" Text="{Binding HomeViewModel.LeagueGameName}" />
-					    <Run FontSize="18" Text="{Binding HomeViewModel.LeagueTagLine}" Foreground="Gray"/>
+					    <Run FontSize="18" Text="{Binding HomeViewModel.LeagueTagLine}" Foreground="Gray" />
 				    </TextBlock>
 				</StackPanel>
 			</StackPanel>

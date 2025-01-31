@@ -57,6 +57,8 @@ public class HomeViewModel : ReactiveObject
         }
         else
         {
+            LeagueGameName = "Waiting on league client";
+            LeagueTagLine = "";
             LeagueDataLoaded = false;
         }
     }

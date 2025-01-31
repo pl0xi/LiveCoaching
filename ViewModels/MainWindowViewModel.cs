@@ -23,11 +23,7 @@ public class MainWindowViewModel : ReactiveObject
     private void UpdateClientStatus()
     {
         LeagueUiClientManager.SetClientStatus();
-
-        if (LeagueUiClientManager.GetIsClientOpen())
-        {
-            _ = HomeViewModel.UpdateLeagueSummonerAsync();
-        }
+        _ = HomeViewModel.UpdateLeagueSummonerAsync();
     }
 
     public HomeViewModel HomeViewModel { get; } = new HomeViewModel();

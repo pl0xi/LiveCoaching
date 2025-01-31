@@ -1,4 +1,5 @@
 using LiveCoaching.Types;
+using Polly;
 using System;
 using System.Diagnostics;
 using System.Net.Http;
@@ -13,6 +14,9 @@ public static class LeagueUiClientManager
     private static readonly PlatformID systemOS = Environment.OSVersion.Platform;
     private static HttpClient? sharedClient;
     private static bool isClientOpen = false;
+    private static readonly AsyncPolicy RetryPolicy = Policy
+        .Handle<HttpRequestException>()
+        .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2));
 
     public static void SetClientStatus()
     {
@@ -63,7 +67,11 @@ public static class LeagueUiClientManager
                 var appPortMatch = Regex.Match(commandLine, @"--app-port=([0-9]*)");
                 var authTokenMatch = Regex.Match(commandLine, @"--remoting-auth-token=([\w-]*)");
 
-                if (!appPortMatch.Success) return;
+                if (!appPortMatch.Success)
+                {
+                    isClientOpen = false;
+                    return;
+                };
 
                 byte[] authByte = Encoding.ASCII.GetBytes("riot:" + authTokenMatch.Groups[1].Value);
                 string auth = Convert.ToBase64String(authByte);
@@ -71,7 +79,7 @@ public static class LeagueUiClientManager
                 HttpClientHandler handler = new()
                 {
                     ClientCertificateOptions = ClientCertificateOption.Manual,
-                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true¨,
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true,
                 };
 
                 sharedClient = new HttpClient(handler)
@@ -94,7 +102,7 @@ public static class LeagueUiClientManager
         if (sharedClient == null) return null;
         try
         {
-            var response = await sharedClient.GetFromJsonAsync<Summoner>("lol-summoner/v1/current-summoner");
+            var response = await RetryPolicy.ExecuteAsync(() => sharedClient.GetFromJsonAsync<Summoner>("lol-summoner/v1/current-summoner"));
 
             return response;
         }
