@@ -71,7 +71,7 @@ public static class LeagueUiClientManager
                 HttpClientHandler handler = new()
                 {
                     ClientCertificateOptions = ClientCertificateOption.Manual,
-                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true¨,
                 };
 
                 sharedClient = new HttpClient(handler)
@@ -81,7 +81,7 @@ public static class LeagueUiClientManager
                     DefaultRequestHeaders =
                     {
                         { "Authorization", "Basic " + auth },
-                    }
+                    },
                 };
 
                 isClientOpen = true;
@@ -92,9 +92,17 @@ public static class LeagueUiClientManager
     public static async Task<Summoner?> GetLeagueSummoner()
     {
         if (sharedClient == null) return null;
-        var response = await sharedClient.GetFromJsonAsync<Summoner>("lol-summoner/v1/current-summoner");
+        try
+        {
+            var response = await sharedClient.GetFromJsonAsync<Summoner>("lol-summoner/v1/current-summoner");
 
-        return response;
+            return response;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null;
+        }
     }
 
     // TODO: Implement
