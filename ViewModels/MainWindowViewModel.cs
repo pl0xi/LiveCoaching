@@ -1,7 +1,7 @@
-﻿using LiveCoaching.Services;
-using ReactiveUI;
-using System;
+﻿using System;
 using System.Threading;
+using LiveCoaching.Services;
+using ReactiveUI;
 
 namespace LiveCoaching.ViewModels;
 
@@ -11,21 +11,10 @@ public class MainWindowViewModel : ReactiveObject
 
     public MainWindowViewModel()
     {
-        StartPeriodTimer();
+        _timer = new Timer(_ => LeagueUiClientManager.SetClientStatus(), null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
     }
 
-
-    public void StartPeriodTimer()
-    {
-        _timer = new Timer(_ => UpdateClientStatus(), null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
-    }
-
-    private void UpdateClientStatus()
-    {
-        LeagueUiClientManager.SetClientStatus();
-        _ = HomeViewModel.UpdateLeagueSummonerAsync();
-    }
-
-    public HomeViewModel HomeViewModel { get; } = new HomeViewModel();
-    public GameViewModel GameViewModel { get; } = new GameViewModel();
+    public HomeViewModel HomeViewModel { get; } = new();
+    public GameViewModel GameViewModel { get; } = new();
+    public MatchHistoryViewModel MatchHistoryViewModel { get; } = new();
 }

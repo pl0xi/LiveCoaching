@@ -27,31 +27,55 @@
         </Style>
     </Window.Styles>
 
-    <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left" >
+    <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left">
         <TabItem>
             <TabItem.Header>
-                <Image RenderOptions.BitmapInterpolationMode="MediumQuality" Source="avares://LiveCoaching/Assets/TabIcons/home.png" Width="15" Height="15"/>
+                <Image ToolTip.Tip="Home" RenderOptions.BitmapInterpolationMode="MediumQuality"
+                       Source="avares://LiveCoaching/Assets/TabIcons/home.png" Width="15" Height="15" />
             </TabItem.Header>
             <StackPanel Orientation="Horizontal" Height="80" VerticalAlignment="Top">
-				<Image IsVisible="{Binding HomeViewModel.LeagueDataLoaded}" VerticalAlignment="Top" Height="80" Width="80" asyncImageLoader:ImageLoader.Source="{Binding HomeViewModel.LeagueUserIcon}" />
-				<StackPanel Margin="15, 0, 0, 0" VerticalAlignment="Bottom" Spacing="-10">
-					<TextBlock IsVisible="{Binding HomeViewModel.LeagueDataLoaded}" FontFamily="{StaticResource NotoSansFont}" FontSize="18" Text="{Binding HomeViewModel.LeagueSummonerLevel}" />
-				    <TextBlock FontFamily="{StaticResource NotoSansFont}" >
-					    <Run FontSize="32" Text="{Binding HomeViewModel.LeagueGameName}" />
-					    <Run FontSize="18" Text="{Binding HomeViewModel.LeagueTagLine}" Foreground="Gray" />
-				    </TextBlock>
-				</StackPanel>
-			</StackPanel>
+                <Image IsVisible="{Binding HomeViewModel.LeagueDataLoaded}" VerticalAlignment="Top" Height="80"
+                       Width="80" asyncImageLoader:ImageLoader.Source="{Binding HomeViewModel.LeagueUserIcon}" />
+                <StackPanel Margin="15, 0, 0, 0" VerticalAlignment="Bottom" Spacing="-10">
+                    <TextBlock IsVisible="{Binding HomeViewModel.LeagueDataLoaded}"
+                               FontFamily="{StaticResource NotoSansFont}" FontSize="18"
+                               Text="{Binding HomeViewModel.LeagueSummonerLevel}" />
+                    <TextBlock FontFamily="{StaticResource NotoSansFont}">
+                        <Run FontSize="32" Text="{Binding HomeViewModel.LeagueGameName}" />
+                        <Run FontSize="18" Text="{Binding HomeViewModel.LeagueTagLine}" Foreground="Gray" />
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
         </TabItem>
 
-        <TabItem> 
+        <TabItem>
             <TabItem.Header>
-                <Image Source="avares://LiveCoaching/Assets/avalonia-logo.ico" Width="25" Height="25"/>
+                <Image Source="avares://LiveCoaching/Assets/avalonia-logo.ico" Width="25" Height="25" />
             </TabItem.Header>
             <StackPanel DataContext="{Binding GameViewModel}">
                 <TextBlock
                     DataContext="{Binding title}"
-                    FontFamily="{StaticResource NotoSansFont}" FontSize="48"/>
+                    FontFamily="{StaticResource NotoSansFont}" FontSize="48" />
+            </StackPanel>
+        </TabItem>
+
+        <TabItem>
+            <TabItem.Header>
+                <Image ToolTip.Tip="Match history" Width="15" Height="15"
+                       RenderOptions.BitmapInterpolationMode="MediumQuality"
+                       Source="avares://LiveCoaching/Assets/TabIcons/list.png" />
+            </TabItem.Header>
+            <StackPanel>
+                <TextBlock Text="Match history" FontSize="32" FontFamily="{StaticResource NotoSansFont}" />
+                <ItemsRepeater ItemsSource="{Binding MatchHistoryViewModel.MatchHistory}">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding gameMode}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
             </StackPanel>
         </TabItem>
 
