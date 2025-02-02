@@ -3,15 +3,15 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using LiveCoaching.Models.DTO;
 using LiveCoaching.Services;
-using LiveCoaching.Types;
 using ReactiveUI;
 
 namespace LiveCoaching.ViewModels;
 
 public class MatchHistoryViewModel : ReactiveObject
 {
-    private ObservableCollection<Game> _games = new();
+    private ObservableCollection<GameDTO> _games = new();
     private Timer? _timer;
 
     public MatchHistoryViewModel()
@@ -27,23 +27,27 @@ public class MatchHistoryViewModel : ReactiveObject
                     Debug.WriteLine(e);
                 }
             }, null, TimeSpan.Zero,
-            TimeSpan.FromSeconds(5));
+            TimeSpan.FromSeconds(30));
     }
 
-    public ObservableCollection<Game> MatchHistory
+    // TODO: Fix Sets add to the list in View
+    public ObservableCollection<GameDTO> MatchHistory
     {
         get => _games;
         set => this.RaiseAndSetIfChanged(ref _games, value);
     }
 
-    private async Task UpdateLeagueMatchHistory()
+    public async Task UpdateLeagueMatchHistory()
     {
         if (LeagueUiClientManager.GetIsClientOpen())
         {
-            var matchHistory = await LeagueUiClientManager.GetLeagueSummonerMatchHistoryAsync();
-
-            if (matchHistory?.games?.games != null)
-                MatchHistory = new ObservableCollection<Game>(matchHistory.games.games);
+            var games = await LeagueUiClientManager.GetLeagueSummonerMatchHistoryAsync();
+            games?.ForEach(game =>
+            {
+                var index = MatchHistory.IndexOf(game);
+                if (index == -1)
+                    MatchHistory.Add(game);
+            });
         }
     }
 }

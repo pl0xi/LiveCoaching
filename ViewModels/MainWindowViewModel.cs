@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using LiveCoaching.Services;
 using ReactiveUI;
@@ -7,11 +8,29 @@ namespace LiveCoaching.ViewModels;
 
 public class MainWindowViewModel : ReactiveObject
 {
+    private bool _firstTimeClientOpen;
     private Timer? _timer;
 
     public MainWindowViewModel()
     {
-        _timer = new Timer(_ => LeagueUiClientManager.SetClientStatus(), null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+        // TODO: Update HomeViewModel & MatchHistoryViewModel on first "true" client status
+        _timer = new Timer(async void (_) =>
+        {
+            try
+            {
+                LeagueUiClientManager.SetClientStatus();
+                if (!_firstTimeClientOpen && LeagueUiClientManager.GetIsClientOpen())
+                {
+                    await HomeViewModel.UpdateLeagueSummonerAsync();
+                    await MatchHistoryViewModel.UpdateLeagueMatchHistory();
+                    _firstTimeClientOpen = true;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
     }
 
     public HomeViewModel HomeViewModel { get; } = new();

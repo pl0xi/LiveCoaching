@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using LiveCoaching.Models.DTO;
 using LiveCoaching.Types;
 using LiveCoaching.Types.Mappings;
 using Polly;
@@ -14,8 +16,8 @@ namespace LiveCoaching.Services;
 public static class LeagueUiClientManager
 {
     private static readonly PlatformID SystemOS = Environment.OSVersion.Platform;
-    private static HttpClient? sharedClient;
-    private static bool isClientOpen;
+    private static HttpClient? _sharedClient;
+    private static bool _isClientOpen;
 
     private static readonly AsyncPolicy RetryPolicy = Policy
         .Handle<HttpRequestException>()
@@ -62,7 +64,7 @@ public static class LeagueUiClientManager
 
                 if (!appPortMatch.Success)
                 {
-                    isClientOpen = false;
+                    _isClientOpen = false;
                     return;
                 }
 
@@ -75,7 +77,7 @@ public static class LeagueUiClientManager
                     ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
                 };
 
-                sharedClient = new HttpClient(handler)
+                _sharedClient = new HttpClient(handler)
                 {
                     BaseAddress = new Uri("https://127.0.0.1:" + appPortMatch.Groups[1].Value),
                     Timeout = TimeSpan.FromSeconds(5),
@@ -85,18 +87,18 @@ public static class LeagueUiClientManager
                     }
                 };
 
-                isClientOpen = true;
+                _isClientOpen = true;
             }
         }
     }
 
     public static async Task<Summoner?> GetLeagueSummonerAsync()
     {
-        if (sharedClient == null || isClientOpen == false) return null;
+        if (_sharedClient == null || _isClientOpen == false) return null;
         try
         {
             var response = await RetryPolicy.ExecuteAsync(() =>
-                sharedClient.GetFromJsonAsync<Summoner>("lol-summoner/v1/current-summoner"));
+                _sharedClient.GetFromJsonAsync<Summoner>("lol-summoner/v1/current-summoner"));
 
             return response;
         }
@@ -107,21 +109,25 @@ public static class LeagueUiClientManager
         }
     }
 
-    public static async Task<MatchHistory?> GetLeagueSummonerMatchHistoryAsync()
+    public static async Task<List<GameDTO>?> GetLeagueSummonerMatchHistoryAsync()
     {
-        if (sharedClient == null || isClientOpen == false) return null;
+        if (_sharedClient == null || _isClientOpen == false) return null;
         try
         {
             var response = await RetryPolicy.ExecuteAsync(() =>
-                sharedClient.GetFromJsonAsync<MatchHistory>(
+                _sharedClient.GetFromJsonAsync<MatchHistory>(
                     "lol-match-history/v1/products/lol/current-summoner/matches"));
 
-            response.games.games.ForEach(game =>
+            List<GameDTO> games = new();
+
+            response?.games.games.ForEach(game =>
             {
-                if (GameModeMapping.Modes.TryGetValue(game.gameMode, out var mappedGameMode))
-                    game.gameMode = mappedGameMode;
+                if (GameModeMapping.Modes.TryGetValue(game?.gameMode, out var mappedGameMode))
+                    games.Add(new GameDTO(mappedGameMode));
             });
-            return response;
+
+
+            return games;
         }
         catch (Exception ex)
         {
@@ -138,6 +144,6 @@ public static class LeagueUiClientManager
 
     public static bool GetIsClientOpen()
     {
-        return isClientOpen;
+        return _isClientOpen;
     }
 }

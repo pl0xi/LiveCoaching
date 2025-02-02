@@ -5,7 +5,7 @@ namespace LiveCoaching.Types.Mappings;
 public class GameModeMapping
 {
     // https://static.developer.riotgames.com/docs/lol/gameModes.json
-    public static readonly Dictionary<string, string> Modes = new()
+    public static readonly Dictionary<string?, string> Modes = new()
     {
         { "CLASSIC", "Summoners Rift 5v5" },
         { "ODIN", "Dominion/Crystal Scar" },

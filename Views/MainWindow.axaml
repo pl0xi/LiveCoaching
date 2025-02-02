@@ -23,7 +23,7 @@
         </Style>
 
         <Style Selector="StackPanel">
-            <Setter Property="Margin" Value="50 40 0 0" />
+            <Setter Property="Margin" Value="50 40 50 0" />
         </Style>
     </Window.Styles>
 
@@ -33,6 +33,7 @@
                 <Image ToolTip.Tip="Home" RenderOptions.BitmapInterpolationMode="MediumQuality"
                        Source="avares://LiveCoaching/Assets/TabIcons/home.png" Width="15" Height="15" />
             </TabItem.Header>
+            <!-- TODO: Change to Grid instead of StackPanels -->
             <StackPanel Orientation="Horizontal" Height="80" VerticalAlignment="Top">
                 <Image IsVisible="{Binding HomeViewModel.LeagueDataLoaded}" VerticalAlignment="Top" Height="80"
                        Width="80" asyncImageLoader:ImageLoader.Source="{Binding HomeViewModel.LeagueUserIcon}" />
@@ -70,9 +71,16 @@
                 <ItemsRepeater ItemsSource="{Binding MatchHistoryViewModel.MatchHistory}">
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding gameMode}" />
-                            </StackPanel>
+                            <Expander HorizontalAlignment="Stretch">
+                                <Expander.Header>
+                                    <Grid RowDefinitions="10, 50" Margin="0, 10,0, 10">
+                                        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="8" Text="{Binding gameMode}" />
+                                    </Grid>
+                                </Expander.Header>
+                                <StackPanel>
+                                    <TextBlock> TODO </TextBlock>
+                                </StackPanel>
+                            </Expander>
                         </DataTemplate>
                     </ItemsRepeater.ItemTemplate>
                 </ItemsRepeater>

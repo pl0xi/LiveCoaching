@@ -62,11 +62,14 @@ public class HomeViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _leagueDataLoaded, value);
     }
 
-    private async Task UpdateLeagueSummonerAsync()
+    public async Task UpdateLeagueSummonerAsync()
     {
         if (LeagueUiClientManager.GetIsClientOpen())
         {
             var leagueSummoner = await LeagueUiClientManager.GetLeagueSummonerAsync();
+
+            if ((leagueSummoner == null) & (_leagueTagLine == "")) return;
+
             LeagueGameName = leagueSummoner?.gameName ?? "Failed to get league display name";
             LeagueTagLine = leagueSummoner?.tagLine != null ? $"#{leagueSummoner.tagLine}" : "";
             LeagueSummonerLevel = leagueSummoner?.summonerLevel != null ? $"LEVEL {leagueSummoner.summonerLevel}" : "0";
