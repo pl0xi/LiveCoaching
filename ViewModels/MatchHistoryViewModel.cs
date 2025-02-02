@@ -11,7 +11,7 @@ namespace LiveCoaching.ViewModels;
 
 public class MatchHistoryViewModel : ReactiveObject
 {
-    private ObservableCollection<GameDTO> _games = new();
+    private ObservableCollection<GameDto> _games = new();
     private Timer? _timer;
 
     public MatchHistoryViewModel()
@@ -31,7 +31,7 @@ public class MatchHistoryViewModel : ReactiveObject
     }
 
     // TODO: Fix Sets add to the list in View
-    public ObservableCollection<GameDTO> MatchHistory
+    public ObservableCollection<GameDto> MatchHistory
     {
         get => _games;
         set => this.RaiseAndSetIfChanged(ref _games, value);

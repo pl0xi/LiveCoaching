@@ -74,7 +74,7 @@
                             <Expander HorizontalAlignment="Stretch">
                                 <Expander.Header>
                                     <Grid RowDefinitions="10, 50" Margin="0, 10,0, 10">
-                                        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="8" Text="{Binding gameMode}" />
+                                        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="8" Text="{Binding GameMode}" />
                                     </Grid>
                                 </Expander.Header>
                                 <StackPanel>

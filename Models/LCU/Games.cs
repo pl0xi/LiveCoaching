@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LiveCoaching.Types;
+namespace LiveCoaching.Models.LCU;
 
 public record class Games(
     List<Game> games

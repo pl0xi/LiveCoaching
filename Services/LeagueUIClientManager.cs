@@ -7,8 +7,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LiveCoaching.Models.DTO;
-using LiveCoaching.Types;
-using LiveCoaching.Types.Mappings;
+using LiveCoaching.Models.LCU;
+using LiveCoaching.Models.Mappings;
 using Polly;
 
 namespace LiveCoaching.Services;
@@ -109,7 +109,7 @@ public static class LeagueUiClientManager
         }
     }
 
-    public static async Task<List<GameDTO>?> GetLeagueSummonerMatchHistoryAsync()
+    public static async Task<List<GameDto>?> GetLeagueSummonerMatchHistoryAsync()
     {
         if (_sharedClient == null || _isClientOpen == false) return null;
         try
@@ -118,12 +118,11 @@ public static class LeagueUiClientManager
                 _sharedClient.GetFromJsonAsync<MatchHistory>(
                     "lol-match-history/v1/products/lol/current-summoner/matches"));
 
-            List<GameDTO> games = new();
-
+            List<GameDto> games = new();
             response?.games.games.ForEach(game =>
             {
                 if (GameModeMapping.Modes.TryGetValue(game?.gameMode, out var mappedGameMode))
-                    games.Add(new GameDTO(mappedGameMode));
+                    games.Add(new GameDto(game.gameId, mappedGameMode, game.gameCreationDate));
             });
 
 

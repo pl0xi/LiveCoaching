@@ -1,4 +1,4 @@
-﻿namespace LiveCoaching.Types;
+﻿namespace LiveCoaching.Models.LCU;
 
 public record class Summoner(
     string? gameName = null,
