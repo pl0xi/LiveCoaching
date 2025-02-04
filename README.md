@@ -8,7 +8,7 @@ built using Avalonia UI and .NET 9.
 - Avalonia UI
 - .NET 9
 
-# Web Application 
+## Web Application 
 - .NET 9
 - ASP.NET Identity
 
