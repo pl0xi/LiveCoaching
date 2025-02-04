@@ -1,20 +1,25 @@
+using Web_Application.Services;
+using Web_Application.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddHttpClient<IRiotService, RiotService>(client =>
+{
+ client.BaseAddress = new Uri("https://europe.api.riotgames.com");
+ client.DefaultRequestHeaders.Add("X-Riot-Token", builder.Configuration["Riot:Token"]);
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+ app.UseDeveloperExceptionPage();
 }
-
-app.UseHttpsRedirection();
+else
+{
+ app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
