@@ -3,5 +3,5 @@
 public record GameDto(
     long? GameId = null,
     string? GameMode = null,
-    string? GameCreationDate = null
+    string? GameCreationDateComparedToCurrentTime = null
 );
