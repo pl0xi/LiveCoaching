@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using LiveCoaching.Models.DTO;
 using LiveCoaching.Models.LCU;
 using LiveCoaching.Models.Mappings;
+using LiveCoaching.Util;
 using Polly;
 
 namespace LiveCoaching.Services;
@@ -121,8 +122,12 @@ public static class LeagueUiClientManager
             List<GameDto> games = new();
             response?.games.games.ForEach(game =>
             {
-                if (GameModeMapping.Modes.TryGetValue(game?.gameMode, out var mappedGameMode))
-                    games.Add(new GameDto(game.gameId, mappedGameMode, game.gameCreationDate));
+                if (GameModeMapping.Modes.TryGetValue(game?.gameMode!, out var mappedGameMode))
+                {
+                    var gameCreationTimeStamp = DateTime.Parse(game?.gameCreationDate!);
+                    var gameTimeAgo = TimeConversion.CompareTimestampToCurrentTime(gameCreationTimeStamp);
+                    games.Add(new GameDto(game?.gameId, mappedGameMode, gameTimeAgo));
+                }
             });
 
 
