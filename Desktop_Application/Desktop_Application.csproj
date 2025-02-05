@@ -12,7 +12,6 @@
     <ItemGroup>
         <Folder Include="Assets\TabIcons\"/>
         <AvaloniaResource Include="Assets\**"/>
-        <Folder Include="Types\"/>
     </ItemGroup>
 
     <ItemGroup>
