@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Avalonia.Media;
 using LiveCoaching.Models.DTO;
 using LiveCoaching.Models.LCU;
 using LiveCoaching.Models.Mappings;
@@ -122,12 +123,22 @@ public static class LeagueUiClientManager
             List<GameDto> games = new();
             response?.games.games.ForEach(game =>
             {
-                if (GameModeMapping.Modes.TryGetValue(game?.gameMode!, out var mappedGameMode))
-                {
-                    var gameCreationTimeStamp = DateTime.Parse(game?.gameCreationDate!);
-                    var gameTimeAgo = TimeConversion.CompareTimestampToCurrentTime(gameCreationTimeStamp);
-                    games.Add(new GameDto(game?.gameId, mappedGameMode, gameTimeAgo));
-                }
+                if (!GameModeMapping.Modes.TryGetValue(game.gameMode, out var mappedGameMode)) return;
+
+                // Get time lapsed since game creation
+                var gameCreationTimeStamp = DateTime.Parse(game.gameCreationDate);
+                var gameTimeAgo = TimeConversion.CompareTimestampToCurrentTime(gameCreationTimeStamp);
+
+                // Get win/lose status and covert to color
+                var participant = game.participants.Find(matchParticipant =>
+                    matchParticipant.participantId == game.participantIdentities[0].participantId
+                );
+
+                var headerColorGradiant = participant?.stats?.win == true
+                    ? new ExpanderHeaderColorGradient(Color.Parse("#37D5D6"), Color.Parse("#35096D"))
+                    : new ExpanderHeaderColorGradient(Color.Parse("#dd1818"), Color.Parse("#333333"));
+
+                games.Add(new GameDto(game?.gameId, mappedGameMode, gameTimeAgo, headerColorGradiant));
             });
 
 

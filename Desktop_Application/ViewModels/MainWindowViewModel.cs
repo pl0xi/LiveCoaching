@@ -13,7 +13,6 @@ public class MainWindowViewModel : ReactiveObject
 
     public MainWindowViewModel()
     {
-        // TODO: Update HomeViewModel & MatchHistoryViewModel on first "true" client status
         _timer = new Timer(async void (_) =>
         {
             try

@@ -2,6 +2,6 @@
 
 namespace LiveCoaching.Models.LCU;
 
-public record class Games(
+public record Games(
     List<Game> games
 );

@@ -1,5 +1,5 @@
 ﻿namespace LiveCoaching.Models.LCU;
 
-public record class MatchHistory(
+public record MatchHistory(
     Games games
 );

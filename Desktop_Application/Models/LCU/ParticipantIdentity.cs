@@ -1,3 +1,5 @@
 ﻿namespace LiveCoaching.Models.LCU;
 
-public record class ParticipantIdentity;
+public record ParticipantIdentity(
+    int participantId
+);
