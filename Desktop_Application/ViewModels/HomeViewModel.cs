@@ -2,13 +2,14 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using LiveCoaching.Services;
+using LiveCoaching.Services.Api;
 using ReactiveUI;
 
 namespace LiveCoaching.ViewModels;
 
 public class HomeViewModel : ReactiveObject
 {
+    private readonly LeagueClientApiService _leagueClientApiService;
     private bool _leagueDataLoaded;
     private string _leagueGameName = "Waiting on league client";
     private string _leagueSummonerLevel = "0";
@@ -16,8 +17,9 @@ public class HomeViewModel : ReactiveObject
     private string _leagueUserIcon = "https://placehold.co/50.png";
     private Timer? _timer;
 
-    public HomeViewModel()
+    public HomeViewModel(LeagueClientApiService leagueClientApiService)
     {
+        _leagueClientApiService = leagueClientApiService;
         _timer = new Timer(async void (_) =>
             {
                 try
@@ -64,9 +66,9 @@ public class HomeViewModel : ReactiveObject
 
     public async Task UpdateLeagueSummonerAsync()
     {
-        if (LeagueUiClientManager.GetIsClientOpen())
+        if (_leagueClientApiService.GetIsClientOpen())
         {
-            var leagueSummoner = await LeagueUiClientManager.GetLeagueSummonerAsync();
+            var leagueSummoner = await _leagueClientApiService.GetLeagueSummonerAsync();
 
             if ((leagueSummoner == null) & (_leagueTagLine == "")) return;
 
