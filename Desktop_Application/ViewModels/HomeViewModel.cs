@@ -1,7 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using LiveCoaching.Services.Api;
 using ReactiveUI;
 
@@ -15,23 +13,11 @@ public class HomeViewModel : ReactiveObject
     private string _leagueSummonerLevel = "0";
     private string _leagueTagLine = "";
     private string _leagueUserIcon = "https://placehold.co/50.png";
-    private Timer? _timer;
 
     public HomeViewModel(LeagueClientApiService leagueClientApiService)
     {
         _leagueClientApiService = leagueClientApiService;
-        _timer = new Timer(async void (_) =>
-            {
-                try
-                {
-                    await UpdateLeagueSummonerAsync();
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e);
-                }
-            }, null, TimeSpan.Zero,
-            TimeSpan.FromSeconds(5));
+        _leagueClientApiService.ClientStatusChanged += UpdateLeagueSummonerAsync;
     }
 
     public string LeagueGameName
@@ -64,27 +50,36 @@ public class HomeViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _leagueDataLoaded, value);
     }
 
-    public async Task UpdateLeagueSummonerAsync()
+    private async void UpdateLeagueSummonerAsync()
     {
-        if (_leagueClientApiService.GetIsClientOpen())
+        try
         {
-            var leagueSummoner = await _leagueClientApiService.GetLeagueSummonerAsync();
+            if (_leagueClientApiService.GetIsClientOpen())
+            {
+                var leagueSummoner = await _leagueClientApiService.GetLeagueSummonerAsync();
 
-            if ((leagueSummoner == null) & (_leagueTagLine == "")) return;
+                if ((leagueSummoner == null) & (_leagueTagLine == "")) return;
 
-            LeagueGameName = leagueSummoner?.gameName ?? "Failed to get league display name";
-            LeagueTagLine = leagueSummoner?.tagLine != null ? $"#{leagueSummoner.tagLine}" : "";
-            LeagueSummonerLevel = leagueSummoner?.summonerLevel != null ? $"LEVEL {leagueSummoner.summonerLevel}" : "0";
-            LeagueUserIcon = leagueSummoner?.profileIconId != null
-                ? $"https://ddragon.leagueoflegends.com/cdn/15.2.1/img/profileicon/{leagueSummoner.profileIconId}.png"
-                : "https://placehold.co/80.png";
-            LeagueDataLoaded = true;
+                LeagueGameName = leagueSummoner?.gameName ?? "Failed to get league display name";
+                LeagueTagLine = leagueSummoner?.tagLine != null ? $"#{leagueSummoner.tagLine}" : "";
+                LeagueSummonerLevel = leagueSummoner?.summonerLevel != null
+                    ? $"LEVEL {leagueSummoner.summonerLevel}"
+                    : "0";
+                LeagueUserIcon = leagueSummoner?.profileIconId != null
+                    ? $"https://ddragon.leagueoflegends.com/cdn/15.2.1/img/profileicon/{leagueSummoner.profileIconId}.png"
+                    : "https://placehold.co/80.png";
+                LeagueDataLoaded = true;
+            }
+            else
+            {
+                LeagueGameName = "Waiting on league client";
+                LeagueTagLine = "";
+                LeagueDataLoaded = false;
+            }
         }
-        else
+        catch (Exception e)
         {
-            LeagueGameName = "Waiting on league client";
-            LeagueTagLine = "";
-            LeagueDataLoaded = false;
+            Debug.WriteLine(e);
         }
     }
 }

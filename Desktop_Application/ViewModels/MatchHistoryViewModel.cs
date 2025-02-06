@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using LiveCoaching.Models.DTO;
 using LiveCoaching.Services.Api;
 using ReactiveUI;
@@ -13,24 +11,11 @@ public class MatchHistoryViewModel : ReactiveObject
 {
     private readonly LeagueClientApiService _leagueClientApiService;
     private ObservableCollection<GameDto> _games = new();
-    private Timer? _timer;
 
     public MatchHistoryViewModel(LeagueClientApiService leagueClientApiService)
     {
         _leagueClientApiService = leagueClientApiService;
-
-        _timer = new Timer(async void (_) =>
-            {
-                try
-                {
-                    await UpdateLeagueMatchHistory();
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e);
-                }
-            }, null, TimeSpan.Zero,
-            TimeSpan.FromSeconds(30));
+        _leagueClientApiService.ClientStatusChanged += UpdateLeagueMatchHistory;
     }
 
     public ObservableCollection<GameDto> MatchHistory
@@ -39,17 +24,24 @@ public class MatchHistoryViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _games, value);
     }
 
-    public async Task UpdateLeagueMatchHistory()
+    public async void UpdateLeagueMatchHistory()
     {
-        if (_leagueClientApiService.GetIsClientOpen())
+        try
         {
-            var games = await _leagueClientApiService.GetLeagueSummonerMatchHistoryAsync();
-            games?.ForEach(game =>
+            if (_leagueClientApiService.GetIsClientOpen())
             {
-                var index = MatchHistory.IndexOf(game);
-                if (index == -1)
-                    MatchHistory.Add(game);
-            });
+                var games = await _leagueClientApiService.GetLeagueSummonerMatchHistoryAsync();
+                games?.ForEach(game =>
+                {
+                    var index = MatchHistory.IndexOf(game);
+                    if (index == -1)
+                        MatchHistory.Add(game);
+                });
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
         }
     }
 }

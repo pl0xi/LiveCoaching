@@ -22,7 +22,8 @@ public class LeagueClientApiService
     private readonly HttpClient? _sharedClient; 
     private bool _isClientOpen;
     private Timer _timer;
-
+    public event Action? ClientStatusChanged;
+    
     private readonly AsyncPolicy _retryPolicy = Policy
         .Handle<HttpRequestException>()
         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2));
@@ -30,11 +31,13 @@ public class LeagueClientApiService
     public LeagueClientApiService(HttpClient sharedClient)
     {
        _sharedClient = sharedClient;
-       _timer = new Timer(async void (_) =>
+       _timer = new Timer(void (_) =>
        {
            try
            {
+               // TODO: Refactor to make this task, skip process check, if already established a connection (Check with API call instead to the LCU API)
                SetClientStatus();
+               ClientStatusChanged?.Invoke();
            }
            catch (Exception e)
            {
