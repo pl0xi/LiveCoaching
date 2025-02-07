@@ -1,8 +1,9 @@
 ﻿namespace LiveCoaching.Models.DTO;
 
 public record GameDto(
-    long? GameId = null,
-    string? GameMode = null,
-    string? GameCreationDateComparedToCurrentTime = null,
-    ExpanderHeaderColorGradient? ExpanderHeaderColorGradient = null
+    long GameId,
+    string GameMode,
+    string GameCreationDateComparedToCurrentTime,
+    ExpanderHeaderColorGradient ExpanderHeaderColorGradient,
+    string ChampionIconUrl
 );
