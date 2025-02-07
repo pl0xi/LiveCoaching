@@ -12,7 +12,7 @@ public class HomeViewModel : ReactiveObject
     private string _leagueGameName = "Waiting on league client";
     private string _leagueSummonerLevel = "0";
     private string _leagueTagLine = "";
-    private string _leagueUserIcon = "https://placehold.co/50.png";
+    private string _leagueUserIconUrl = "https://placehold.co/50.png";
 
     public HomeViewModel(LeagueClientApiService leagueClientApiService)
     {
@@ -26,10 +26,10 @@ public class HomeViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _leagueGameName, value);
     }
 
-    public string LeagueUserIcon
+    public string LeagueUserIconUrl
     {
-        get => _leagueUserIcon;
-        set => this.RaiseAndSetIfChanged(ref _leagueUserIcon, value);
+        get => _leagueUserIconUrl;
+        set => this.RaiseAndSetIfChanged(ref _leagueUserIconUrl, value);
     }
 
     public string LeagueTagLine
@@ -65,8 +65,8 @@ public class HomeViewModel : ReactiveObject
                 LeagueSummonerLevel = leagueSummoner?.summonerLevel != null
                     ? $"LEVEL {leagueSummoner.summonerLevel}"
                     : "0";
-                LeagueUserIcon = leagueSummoner?.profileIconId != null
-                    ? $"https://ddragon.leagueoflegends.com/cdn/15.2.1/img/profileicon/{leagueSummoner.profileIconId}.png"
+                LeagueUserIconUrl = leagueSummoner?.profileIconId != null
+                    ? $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/profileicon/{leagueSummoner.profileIconId}.png"
                     : "https://placehold.co/80.png";
                 LeagueDataLoaded = true;
             }

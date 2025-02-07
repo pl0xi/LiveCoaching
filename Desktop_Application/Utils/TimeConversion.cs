@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LiveCoaching.Util;
+namespace LiveCoaching.Utils;
 
 public static class TimeConversion
 {

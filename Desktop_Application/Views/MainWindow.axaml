@@ -36,7 +36,7 @@
             <!-- TODO: Change to Grid instead of StackPanels -->
             <StackPanel Orientation="Horizontal" Height="80" VerticalAlignment="Top">
                 <Image IsVisible="{Binding HomeViewModel.LeagueDataLoaded}" VerticalAlignment="Top" Height="80"
-                       Width="80" asyncImageLoader:ImageLoader.Source="{Binding HomeViewModel.LeagueUserIcon}" />
+                       Width="80" asyncImageLoader:ImageLoader.Source="{Binding HomeViewModel.LeagueUserIconUrl}" />
                 <StackPanel Margin="15, 0, 0, 0" VerticalAlignment="Bottom" Spacing="-10">
                     <TextBlock IsVisible="{Binding HomeViewModel.LeagueDataLoaded}"
                                FontFamily="{StaticResource NotoSansFont}" FontSize="18"
@@ -104,6 +104,8 @@
                                         <TextBlock Grid.Row="0" Grid.Column="3" FontSize="9"
                                                    HorizontalAlignment="Right"
                                                    Text="{Binding GameCreationDateComparedToCurrentTime}" />
+                                        <Image Width="40" Height="40" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"
+                                               asyncImageLoader:ImageLoader.Source="{Binding ChampionIconUrl}" />
                                     </Grid>
                                 </Expander.Header>
                                 <StackPanel>

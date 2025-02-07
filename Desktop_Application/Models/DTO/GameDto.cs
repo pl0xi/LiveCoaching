@@ -2,7 +2,8 @@
 
 public record GameDto(
     long GameId,
-    string? GameMode = null,
-    string? GameCreationDateComparedToCurrentTime = null,
-    ExpanderHeaderColorGradient? ExpanderHeaderColorGradient = null
+    string GameMode,
+    string GameCreationDateComparedToCurrentTime,
+    ExpanderHeaderColorGradient ExpanderHeaderColorGradient,
+    string ChampionIconUrl
 );

@@ -11,42 +11,45 @@ using Avalonia.Media;
 using LiveCoaching.Models.DTO;
 using LiveCoaching.Models.LCU;
 using LiveCoaching.Models.Mappings;
-using LiveCoaching.Util;
+using LiveCoaching.Utils;
 using Polly;
 
 namespace LiveCoaching.Services.Api;
 
 public class LeagueClientApiService
 {
-    private readonly PlatformID _systemOS = Environment.OSVersion.Platform;
-    private readonly HttpClient? _sharedClient; 
-    private bool _isClientOpen;
-    private Timer _timer;
-    public event Action? ClientStatusChanged;
-    
     private readonly AsyncPolicy _retryPolicy = Policy
         .Handle<HttpRequestException>()
         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2));
 
+    private readonly HttpClient? _sharedClient;
+    private readonly PlatformID _systemOS = Environment.OSVersion.Platform;
+    private bool _isClientOpen;
+    private Timer _timer;
+
     public LeagueClientApiService(HttpClient sharedClient)
     {
-       _sharedClient = sharedClient;
-       _timer = new Timer(void (_) =>
-       {
-           try
-           {
-               // TODO: Refactor to make this task, skip process check, if already established a connection (Check with API call instead to the LCU API)
-               SetClientStatus();
-               ClientStatusChanged?.Invoke();
-           }
-           catch (Exception e)
-           {
-               Debug.WriteLine(e);
-           }
-       }, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+        _sharedClient = sharedClient;
+        _timer = new Timer(void (_) =>
+        {
+            try
+            {
+                // TODO: Refactor to make this task, skip process check, if already established a connection (Check with API call instead to the LCU API)
+                SetClientStatus();
+                ClientStatusChanged?.Invoke();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
     }
-    
-    public void SetClientStatus()
+
+    public event Action? ClientStatusChanged;
+
+
+    // TODO: Refactor function - duplicate code
+    private void SetClientStatus()
     {
         ProcessStartInfo startInfo;
 
@@ -69,7 +72,9 @@ public class LeagueClientApiService
             startInfo.RedirectStandardOutput = true;
         }
         else
+        {
             throw new Exception("Not Supported OS");
+        }
 
         using (var terminalOrCmd = Process.Start(startInfo))
         {
@@ -93,9 +98,13 @@ public class LeagueClientApiService
 
                 var authByte = Encoding.ASCII.GetBytes("riot:" + authTokenMatch.Groups[1].Value);
                 var auth = Convert.ToBase64String(authByte);
-                
+
                 _sharedClient.BaseAddress = new Uri("https://127.0.0.1:" + appPortMatch.Groups[1].Value);
+
+                // TODO: Add this in the Program.cs instead
                 _sharedClient.Timeout = TimeSpan.FromSeconds(5);
+
+
                 _sharedClient.DefaultRequestHeaders.Add("Authorization", "Basic " + auth);
 
                 _isClientOpen = true;
@@ -138,7 +147,7 @@ public class LeagueClientApiService
                 var gameCreationTimeStamp = DateTime.Parse(game.gameCreationDate);
                 var gameTimeAgo = TimeConversion.CompareTimestampToCurrentTime(gameCreationTimeStamp);
 
-                // Get win/lose status and covert to color
+                // Get win/lose status and convert to color
                 var participant = game.participants.Find(matchParticipant =>
                     matchParticipant.participantId == game.participantIdentities[0].participantId
                 );
@@ -147,7 +156,8 @@ public class LeagueClientApiService
                     ? new ExpanderHeaderColorGradient(Color.Parse("#37D5D6"), Color.Parse("#35096D"))
                     : new ExpanderHeaderColorGradient(Color.Parse("#dd1818"), Color.Parse("#333333"));
 
-                games.Add(new GameDto(game.gameId, mappedGameMode, gameTimeAgo, headerColorGradiant));
+                games.Add(new GameDto(game.gameId, mappedGameMode, gameTimeAgo, headerColorGradiant,
+                    $"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/{participant?.championId}.png"));
             });
 
 

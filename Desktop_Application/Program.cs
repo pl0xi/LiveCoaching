@@ -15,18 +15,17 @@ internal sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        var serviceCollection = new ServiceCollection();
-
-        ConfigureServices(serviceCollection);
-
-        _serviceProvider = serviceCollection.BuildServiceProvider();
+        // TODO: Create global for patch version: https://ddragon.leagueoflegends.com/api/versions.json
+        SetupServices();
 
         BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
     }
 
-    private static void ConfigureServices(IServiceCollection services)
+    private static void SetupServices()
     {
+        var services = new ServiceCollection();
+
         // LeagueClientApiService
         services.AddSingleton<LeagueClientApiService>();
         HttpClientHandler handler = new();
@@ -34,17 +33,26 @@ internal sealed class Program
         handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
         services.AddHttpClient<LeagueClientApiService>().ConfigurePrimaryHttpMessageHandler(() => handler);
 
+        // LeagueWebApiService
+        services.AddHttpClient<LeagueWebApiService>();
+
         // HomeViewModel & MatchHistoryViewModel
         services.AddSingleton<HomeViewModel>();
         services.AddSingleton<MatchHistoryViewModel>();
+
+        _serviceProvider = services.BuildServiceProvider();
     }
 
-    public static T GetService<T>()
+    public static T GetService<T>() where T : notnull
     {
+        // TODO: Only compile at development 
+        // For development purpose only
+        if (_serviceProvider == null) SetupServices();
+
         return _serviceProvider.GetRequiredService<T>();
     }
 
-    public static AppBuilder BuildAvaloniaApp()
+    private static AppBuilder BuildAvaloniaApp()
     {
         return AppBuilder.Configure<App>()
             .UsePlatformDetect()
