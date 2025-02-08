@@ -1,0 +1,63 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             mc:Ignorable="d" 
+             x:Class="LiveCoaching.Controls.MatchHistoryGame"
+             xmlns:dto="clr-namespace:LiveCoaching.Models.DTO"
+             >
+    
+    <UserControl.Template>
+       <ControlTemplate>
+            <ItemsRepeater ItemsSource="{TemplateBinding MatchHistory}">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="dto:GameDto">
+                            <Expander HorizontalAlignment="Stretch" CornerRadius="10" Margin="0, 0, 0, 5">
+                                <Expander.Styles>
+                                    <Style Selector="Expander /template/ ToggleButton">
+                                        <Setter Property="Background">
+                                            <LinearGradientBrush StartPoint="-15%, 0%" EndPoint="100%, 0%">
+                                                <GradientStop Color="{Binding ExpanderHeaderColorGradient.Color1}"
+                                                              Offset="0" />
+                                                <GradientStop Color="{Binding ExpanderHeaderColorGradient.Color2}"
+                                                              Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Setter>
+                                    </Style>
+                                    <Style
+                                        Selector="Expander /template/ ToggleButton:pointerover /template/ Border">
+                                        <Setter Property="Background">
+                                            <LinearGradientBrush StartPoint="-15%, 0%" EndPoint="100%, 0%">
+                                                <GradientStop Color="{Binding ExpanderHeaderColorGradient.Color1}"
+                                                              Offset="0" />
+                                                <GradientStop Color="{Binding ExpanderHeaderColorGradient.Color2}"
+                                                              Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Setter>
+                                    </Style>
+                                </Expander.Styles>
+                                <Expander.Header>
+                                    <Grid RowDefinitions="11, 50"
+                                          ColumnDefinitions="*, *, *, *"
+                                          Margin="0, 10,0, 10">
+                                        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="9"
+                                                   Text="{Binding GameMode}" />
+                                        <TextBlock Grid.Row="0" Grid.Column="3" FontSize="9"
+                                                   HorizontalAlignment="Right"
+                                                   Text="{Binding GameCreationDateComparedToCurrentTime}" />
+                                        <Image Width="40" Height="40" Grid.Row="1" Grid.Column="0"
+                                               HorizontalAlignment="Left"
+                                               asyncImageLoader:ImageLoader.Source="{Binding ChampionIconUrl}" />
+                                    </Grid>
+                                </Expander.Header>
+                                <StackPanel>
+                                    <TextBlock> TODO </TextBlock>
+                                </StackPanel>
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater> 
+       </ControlTemplate> 
+    </UserControl.Template>
+</UserControl>
