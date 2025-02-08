@@ -50,6 +50,7 @@ public class HomeViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _leagueDataLoaded, value);
     }
 
+    // TODO: If client is closed and have been established before, don't change to "Waiting on client"
     private async void UpdateLeagueSummonerAsync()
     {
         try

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:LiveCoaching.ViewModels"
+    xmlns:controls="clr-namespace:LiveCoaching.Controls"
     Title="LiveCoaching"
     d:DesignHeight="720"
     d:DesignWidth="1280"
@@ -60,6 +61,7 @@
             </StackPanel>
         </TabItem>
 
+
         <TabItem>
             <TabItem.Header>
                 <Image ToolTip.Tip="Match history" Width="15" Height="15"
@@ -68,53 +70,7 @@
             </TabItem.Header>
             <StackPanel>
                 <TextBlock Text="Match history" FontSize="32" FontFamily="{StaticResource NotoSansFont}" />
-                <ItemsRepeater ItemsSource="{Binding MatchHistoryViewModel.MatchHistory}">
-                    <ItemsRepeater.ItemTemplate>
-                        <DataTemplate>
-                            <Expander HorizontalAlignment="Stretch" CornerRadius="10" Margin="0, 0, 0, 5">
-                                <Expander.Styles>
-                                    <Style Selector="Expander /template/ ToggleButton">
-                                        <Setter Property="Background">
-                                            <LinearGradientBrush StartPoint="-15%, 0%" EndPoint="100%, 0%">
-                                                <GradientStop Color="{Binding ExpanderHeaderColorGradient.Color1}"
-                                                              Offset="0" />
-                                                <GradientStop Color="{Binding ExpanderHeaderColorGradient.Color2}"
-                                                              Offset="1" />
-                                            </LinearGradientBrush>
-                                        </Setter>
-                                    </Style>
-                                    <Style
-                                        Selector="Expander /template/ ToggleButton:pointerover /template/ Border">
-                                        <Setter Property="Background">
-                                            <LinearGradientBrush StartPoint="-15%, 0%" EndPoint="100%, 0%">
-                                                <GradientStop Color="{Binding ExpanderHeaderColorGradient.Color1}"
-                                                              Offset="0" />
-                                                <GradientStop Color="{Binding ExpanderHeaderColorGradient.Color2}"
-                                                              Offset="1" />
-                                            </LinearGradientBrush>
-                                        </Setter>
-                                    </Style>
-                                </Expander.Styles>
-                                <Expander.Header>
-                                    <Grid RowDefinitions="11, 50"
-                                          ColumnDefinitions="*, *, *, *"
-                                          Margin="0, 10,0, 10">
-                                        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="9"
-                                                   Text="{Binding GameMode}" />
-                                        <TextBlock Grid.Row="0" Grid.Column="3" FontSize="9"
-                                                   HorizontalAlignment="Right"
-                                                   Text="{Binding GameCreationDateComparedToCurrentTime}" />
-                                        <Image Width="40" Height="40" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"
-                                               asyncImageLoader:ImageLoader.Source="{Binding ChampionIconUrl}" />
-                                    </Grid>
-                                </Expander.Header>
-                                <StackPanel>
-                                    <TextBlock> TODO </TextBlock>
-                                </StackPanel>
-                            </Expander>
-                        </DataTemplate>
-                    </ItemsRepeater.ItemTemplate>
-                </ItemsRepeater>
+                <controls:MatchHistoryGame MatchHistory="{Binding MatchHistoryViewModel.MatchHistory}" />
             </StackPanel>
         </TabItem>
 
