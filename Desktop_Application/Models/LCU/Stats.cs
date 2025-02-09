@@ -1,5 +1,6 @@
 ﻿namespace LiveCoaching.Models.LCU;
 
 public record Stats(
-    bool win 
+    bool win,
+    int champLevel
 ); 

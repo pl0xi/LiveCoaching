@@ -5,5 +5,6 @@ public record GameDto(
     string GameMode,
     string GameCreationDateComparedToCurrentTime,
     ExpanderHeaderColorGradient ExpanderHeaderColorGradient,
-    string ChampionIconUrl
+    string ChampionIconUrl,
+    string ChampLevel
 );
