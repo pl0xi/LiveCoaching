@@ -3,5 +3,5 @@
 public record Participant(
     int participantId,
     int championId,
-    Stats? stats = null
+    Stats stats
 ); 
