@@ -2,5 +2,12 @@
 
 public record Stats(
     bool win,
-    int champLevel
-); 
+    int champLevel,
+    int item0,
+    int item1,
+    int item2,
+    int item3,
+    int item4,
+    int item5,
+    int item6
+);
