@@ -1,4 +1,6 @@
-﻿namespace LiveCoaching.Models.DTO;
+﻿using System.Collections.Generic;
+
+namespace LiveCoaching.Models.DTO;
 
 public record GameDto(
     long GameId,
@@ -6,5 +8,6 @@ public record GameDto(
     string GameCreationDateComparedToCurrentTime,
     ExpanderHeaderColorGradient ExpanderHeaderColorGradient,
     string ChampionIconUrl,
-    string ChampLevel
+    string ChampLevel,
+    List<ItemDto> Items
 );

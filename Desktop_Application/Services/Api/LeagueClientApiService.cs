@@ -152,13 +152,27 @@ public class LeagueClientApiService
                     matchParticipant.participantId == game.participantIdentities[0].participantId
                 );
 
+                // Get items
+                var items = new List<ItemDto>();
+                for (var i = 0; i <= 6; i++)
+                {
+                    var item = participant?.stats.GetType().GetProperty($"item{i}")?.GetValue(participant.stats, null);
+                    if (item != null && (int)item != 0)
+                        items.Add(new ItemDto(
+                            $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/item/{item}.png"));
+                    else
+                        items.Add(new ItemDto(
+                            "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"));
+                }
+
                 var headerColorGradiant = participant?.stats.win == true
                     ? new ExpanderHeaderColorGradient(Color.Parse("#37D5D6"), Color.Parse("#35096D"))
                     : new ExpanderHeaderColorGradient(Color.Parse("#dd1818"), Color.Parse("#333333"));
 
                 games.Add(new GameDto(game.gameId, mappedGameMode, gameTimeAgo, headerColorGradiant,
                     $"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/{participant?.championId}.png",
-                    $"Level {participant.stats.champLevel}"));
+                    $"Level {participant.stats.champLevel}",
+                    items));
             });
 
 
