@@ -169,10 +169,12 @@ public class LeagueClientApiService
                     ? new ExpanderHeaderColorGradient(Color.Parse("#37D5D6"), Color.Parse("#35096D"))
                     : new ExpanderHeaderColorGradient(Color.Parse("#dd1818"), Color.Parse("#333333"));
 
-                games.Add(new GameDto(game.gameId, mappedGameMode, gameTimeAgo, headerColorGradiant,
+                var gameDto = new GameDto(game.gameId, mappedGameMode, gameTimeAgo, headerColorGradiant,
                     $"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/{participant?.championId}.png",
                     $"Level {participant.stats.champLevel}",
-                    items));
+                    items, participant.stats.goldEarned);
+
+                games.Add(gameDto);
             });
 
 
