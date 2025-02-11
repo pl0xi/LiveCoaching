@@ -51,9 +51,21 @@
                                            asyncImageLoader:ImageLoader.Source="{Binding ChampionIconUrl}" />
 
                                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" Margin="5, 0, 0, 0">
-                                        <TextBlock FontSize="12"
-                                                   Text="{Binding ChampLevel}" HorizontalAlignment="Left" />
+                                        <DockPanel>
+                                            <!-- Level display -->
+                                            <TextBlock FontSize="12"
+                                                       Text="{Binding ChampLevel}" HorizontalAlignment="Left" />
 
+                                            <Image
+                                                asyncImageLoader:ImageLoader.Source="https://raw.communitydragon.org/latest/game/assets/ux/floatingtext/goldicon.png"
+                                                Width="15" Height="15" HorizontalAlignment="Right"
+                                                DockPanel.Dock="Right" />
+
+                                            <!-- Gold earned display -->
+                                            <TextBlock FontSize="12" Text="{Binding GoldEarned}"
+                                                       HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                                       Margin="0, 0, 2, 0" />
+                                        </DockPanel>
                                         <ItemsRepeater ItemsSource="{Binding Items}">
                                             <ItemsRepeater.Layout>
                                                 <StackLayout Orientation="Horizontal" Spacing="2" />

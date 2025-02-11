@@ -9,5 +9,6 @@ public record GameDto(
     ExpanderHeaderColorGradient ExpanderHeaderColorGradient,
     string ChampionIconUrl,
     string ChampLevel,
-    List<ItemDto> Items
+    List<ItemDto> Items,
+    int GoldEarned
 );

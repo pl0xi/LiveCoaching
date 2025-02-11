@@ -9,5 +9,6 @@ public record Stats(
     int item3,
     int item4,
     int item5,
-    int item6
+    int item6,
+    int goldEarned
 );
