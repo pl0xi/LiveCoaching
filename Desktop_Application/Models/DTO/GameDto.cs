@@ -10,5 +10,7 @@ public record GameDto(
     string ChampionIconUrl,
     string ChampLevel,
     List<ItemDto> Items,
-    int GoldEarned
+    int GoldEarned,
+    string spell1,
+    string spell2
 );

@@ -3,5 +3,7 @@
 public record Participant(
     int participantId,
     int championId,
-    Stats stats
-); 
+    Stats stats,
+    int spell1Id,
+    int spell2Id
+);
