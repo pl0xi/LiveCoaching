@@ -16,8 +16,11 @@ using Polly;
 
 namespace LiveCoaching.Services.Api;
 
+// TODO: Create class to handle interactions between web API and LCU API
 public class LeagueClientApiService
 {
+    private readonly LeagueWebApiService _leagueWebApiService;
+
     private readonly AsyncPolicy _retryPolicy = Policy
         .Handle<HttpRequestException>()
         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2));
@@ -27,9 +30,11 @@ public class LeagueClientApiService
     private bool _isClientOpen;
     private Timer _timer;
 
-    public LeagueClientApiService(HttpClient sharedClient)
+    public LeagueClientApiService(HttpClient sharedClient, LeagueWebApiService leagueWebApiService)
     {
         _sharedClient = sharedClient;
+
+        // Check client status periodically
         _timer = new Timer(void (_) =>
         {
             try
@@ -43,6 +48,8 @@ public class LeagueClientApiService
                 Debug.WriteLine(e);
             }
         }, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+
+        _leagueWebApiService = leagueWebApiService;
     }
 
     public event Action? ClientStatusChanged;
@@ -169,10 +176,15 @@ public class LeagueClientApiService
                     ? new ExpanderHeaderColorGradient(Color.Parse("#37D5D6"), Color.Parse("#35096D"))
                     : new ExpanderHeaderColorGradient(Color.Parse("#dd1818"), Color.Parse("#333333"));
 
+                var spell1IconUrl = _leagueWebApiService.GetSummonerSpellFileName(participant?.spell1Id ?? 4);
+                var spell2IconUrl = _leagueWebApiService.GetSummonerSpellFileName(participant?.spell2Id ?? 4);
+
                 var gameDto = new GameDto(game.gameId, mappedGameMode, gameTimeAgo, headerColorGradiant,
                     $"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/{participant?.championId}.png",
                     $"Level {participant.stats.champLevel}",
-                    items, participant.stats.goldEarned);
+                    items, participant.stats.goldEarned,
+                    $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/{spell1IconUrl}",
+                    $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/{spell2IconUrl}");
 
                 games.Add(gameDto);
             });
