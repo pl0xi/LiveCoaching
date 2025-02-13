@@ -1,5 +1,7 @@
-﻿namespace LiveCoaching.Models.DataDragon;
+﻿using System.Collections.Generic;
+
+namespace LiveCoaching.Models.DataDragon;
 
 public record SummonerResponse(
-    SummonerData data
+    Dictionary<string, SummonerSpell>? data
     );

@@ -34,6 +34,7 @@ internal sealed class Program
         services.AddHttpClient<LeagueClientApiService>().ConfigurePrimaryHttpMessageHandler(() => handler);
 
         // LeagueWebApiService
+        services.AddSingleton<LeagueWebApiService>();
         services.AddHttpClient<LeagueWebApiService>();
 
         // HomeViewModel & MatchHistoryViewModel
