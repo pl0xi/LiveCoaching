@@ -7,7 +7,6 @@
              x:Class="LiveCoaching.Controls.MatchHistoryGame"
              xmlns:dto="clr-namespace:LiveCoaching.Models.DTO">
 
-    <!-- TODO: Add globally font for this style -->
     <UserControl.Template>
         <ControlTemplate>
             <ItemsRepeater ItemsSource="{TemplateBinding MatchHistory}">

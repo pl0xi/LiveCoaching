@@ -8,19 +8,21 @@
         <local:ViewLocator />
     </Application.DataTemplates>
 
+    <Application.Resources>
+        <!--  Make it default font in app  -->
+        <FontFamily x:Key="NotoSansFont">avares://Desktop_Application/Assets/Fonts#Noto Sans</FontFamily>
+    </Application.Resources>
+
     <Application.Styles>
         <Styles>
             <Style Selector="Window">
                 <Setter Property="Background" Value="#323232" />
                 <Setter Property="MinHeight" Value="720" />
                 <Setter Property="MinWidth" Value="1280" />
+                <Setter Property="FontFamily" Value="{StaticResource NotoSansFont}" />
             </Style>
         </Styles>
         <FluentTheme />
     </Application.Styles>
 
-    <Application.Resources>
-        <!--  Make it default font in app  -->
-        <FontFamily x:Key="NotoSansFont">avares://Desktop_Application/Assets/Fonts#Noto Sans</FontFamily>
-    </Application.Resources>
 </Application>
