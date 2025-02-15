@@ -39,7 +39,8 @@ public class LeagueClientApiService
         {
             try
             {
-                // TODO: Refactor to make this task, skip process check, if already established a connection (Check with API call instead to the LCU API)
+                // TODO: Refactor to make this task, skip process check, if already established a connection (Check with API call instead of checking if client is open with process)
+                // Make functions return status, if request is bad 
                 SetClientStatus();
                 ClientStatusChanged?.Invoke();
             }
@@ -55,32 +56,27 @@ public class LeagueClientApiService
     public event Action? ClientStatusChanged;
 
 
-    // TODO: Refactor function - duplicate code
     private void SetClientStatus()
     {
-        ProcessStartInfo startInfo;
+        var startInfo = new ProcessStartInfo
+        {
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            RedirectStandardOutput = true
+        };
 
-        if (_systemOS == PlatformID.Win32NT)
+        switch (_systemOS)
         {
-            startInfo = new ProcessStartInfo();
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/cwmic PROCESS WHERE name='LeagueClientUx.exe' GET commandline";
-            startInfo.UseShellExecute = false;
-            startInfo.CreateNoWindow = true;
-            startInfo.RedirectStandardOutput = true;
-        }
-        else if (_systemOS == PlatformID.Unix)
-        {
-            startInfo = new ProcessStartInfo();
-            startInfo.FileName = "/bin/bash/";
-            startInfo.Arguments = "-c \"ps -A | grep LeagueClientUx\"";
-            startInfo.UseShellExecute = false;
-            startInfo.CreateNoWindow = true;
-            startInfo.RedirectStandardOutput = true;
-        }
-        else
-        {
-            throw new Exception("Not Supported OS");
+            case PlatformID.Win32NT:
+                startInfo.FileName = "cmd.exe";
+                startInfo.Arguments = "/cwmic PROCESS WHERE name='LeagueClientUx.exe' GET commandline";
+                break;
+            case PlatformID.Unix:
+                startInfo.FileName = "/bin/bash/";
+                startInfo.Arguments = "-c \"ps -A | grep LeagueClientUx\"";
+                break;
+            default:
+                throw new Exception("Not Supported OS");
         }
 
         using (var terminalOrCmd = Process.Start(startInfo))
@@ -110,7 +106,6 @@ public class LeagueClientApiService
 
                 // TODO: Add this in the Program.cs instead
                 _sharedClient.Timeout = TimeSpan.FromSeconds(5);
-
 
                 _sharedClient.DefaultRequestHeaders.Add("Authorization", "Basic " + auth);
 
@@ -187,8 +182,8 @@ public class LeagueClientApiService
                         $"Level {participant.stats.champLevel}",
                         items, participant.stats.goldEarned,
                         $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/{spell1IconUrl}",
-                        $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/{spell2IconUrl}"
-                    );
+                        $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/{spell2IconUrl}",
+                        participant.stats.kills, participant.stats.deaths, participant.stats.assists);
                     games.Add(gameDto);
                 }
                 catch (Exception e)

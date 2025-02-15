@@ -39,7 +39,8 @@ public partial class MatchHistoryGame : UserControl
                             "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png")
                     },
                     8999, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
-                    "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png"
+                    "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
+                    2, 3, 1
                 ),
 
                 new(
@@ -67,7 +68,8 @@ public partial class MatchHistoryGame : UserControl
                         )
                     },
                     12034, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
-                    "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png"
+                    "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
+                    2, 1, 5
                 )
             };
     }

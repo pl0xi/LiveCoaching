@@ -17,6 +17,8 @@ public class HomeViewModel : ReactiveObject
     public HomeViewModel(LeagueClientApiService leagueClientApiService)
     {
         _leagueClientApiService = leagueClientApiService;
+
+        // TODO: Dont update while page not visible
         _leagueClientApiService.ClientStatusChanged += UpdateLeagueSummonerAsync;
     }
 

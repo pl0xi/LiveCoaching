@@ -10,5 +10,8 @@ public record Stats(
     int item4,
     int item5,
     int item6,
-    int goldEarned
+    int goldEarned,
+    int kills,
+    int deaths,
+    int assists
 );

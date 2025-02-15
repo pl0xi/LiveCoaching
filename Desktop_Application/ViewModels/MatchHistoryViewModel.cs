@@ -15,6 +15,8 @@ public class MatchHistoryViewModel : ReactiveObject
     public MatchHistoryViewModel(LeagueClientApiService leagueClientApiService)
     {
         _leagueClientApiService = leagueClientApiService;
+
+        // TODO: Dont update while page not visible
         _leagueClientApiService.ClientStatusChanged += UpdateLeagueMatchHistory;
     }
 

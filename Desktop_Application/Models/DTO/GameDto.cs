@@ -12,5 +12,8 @@ public record GameDto(
     List<ItemDto> Items,
     int GoldEarned,
     string spell1,
-    string spell2
+    string spell2,
+    int Kills,
+    int Deaths,
+    int Assists
 );
