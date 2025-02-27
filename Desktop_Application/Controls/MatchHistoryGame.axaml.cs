@@ -40,7 +40,8 @@ public partial class MatchHistoryGame : UserControl
                     },
                     8999, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
-                    2, 3, 1
+                    2, 3, 1,
+                    2.0f
                 ),
 
                 new(
@@ -69,7 +70,37 @@ public partial class MatchHistoryGame : UserControl
                     },
                     12034, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
-                    2, 1, 5
+                    2, 1, 5,
+                    3.1f
+                ),
+                new(
+                    1,
+                    "Summoners Rift 5v5",
+                    "3 days ago",
+                    new ExpanderHeaderColorGradient(Color.Parse("#dd1818"), Color.Parse("#333333")),
+                    "https://cdn.communitydragon.org/15.3.1/champion/81/square",
+                    "Level 12",
+                    new List<ItemDto>
+                    {
+                        new("https://ddragon.leagueoflegends.com/cdn/15.3.1/img/item/1055.png"),
+                        new("https://ddragon.leagueoflegends.com/cdn/15.3.1/img/item/3142.png"),
+                        new(
+                            "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"),
+                        new(
+                            "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"),
+                        new(
+                            "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"),
+
+                        new(
+                            "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"),
+                        new(
+                            "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"
+                        )
+                    },
+                    12034, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
+                    "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
+                    5, 0, 5,
+                    3.1f
                 )
             };
     }

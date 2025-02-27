@@ -40,7 +40,7 @@
                                 <Grid RowDefinitions="Auto, 2, Auto"
                                       ColumnDefinitions="Auto, Auto, Auto, Auto, *"
                                       Margin="0, 10,0, 10">
-                                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="12"
+                                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="12" Grid.ColumnSpan="2"
                                                Text="{Binding GameMode}" FontWeight="SemiBold" />
                                     <TextBlock Grid.Row="0" Grid.Column="4" FontSize="12"
                                                HorizontalAlignment="Right" FontWeight="SemiBold"
@@ -88,14 +88,22 @@
                                                Width="35"
                                                Height="35" VerticalAlignment="Bottom" />
                                     </DockPanel>
-                                    <DockPanel Grid.Row="2" Grid.Column="3" Margin="50, 0, 0, 0">
-                                        <TextBlock VerticalAlignment="Bottom" FontSize="18">
-                                            <Run Text="{Binding Kills}" />
-                                            <Run Text="/" />
-                                            <Run Text="{Binding Deaths}" />
-                                            <Run Text="/" />
-                                            <Run Text="{Binding Assists}" />
-                                        </TextBlock>
+                                    <DockPanel Grid.Row="2" Grid.Column="3" Margin="50, 0, 0, 0"
+                                               VerticalAlignment="Bottom">
+                                        <!-- Display Kills/Death/Assists -->
+                                        <StackPanel>
+                                            <TextBlock>
+                                                <Run Text="KDA: " />
+                                                <Run Text="{Binding Kda}" />
+                                            </TextBlock>
+                                            <TextBlock VerticalAlignment="Bottom" FontSize="18">
+                                                <Run Text="{Binding Kills}" />
+                                                <Run Text="/" />
+                                                <Run Text="{Binding Deaths}" />
+                                                <Run Text="/" />
+                                                <Run Text="{Binding Assists}" />
+                                            </TextBlock>
+                                        </StackPanel>
                                     </DockPanel>
                                 </Grid>
                             </Expander.Header>

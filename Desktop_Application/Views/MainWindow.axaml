@@ -22,10 +22,6 @@
         <Style Selector="TabControl WrapPanel">
             <Setter Property="Background" Value="#282828" />
         </Style>
-
-        <Style Selector="StackPanel">
-            <Setter Property="Margin" Value="50 40 50 0" />
-        </Style>
     </Window.Styles>
 
     <TabControl HorizontalAlignment="Stretch" TabStripPlacement="Left">
@@ -35,7 +31,7 @@
                        Source="avares://Desktop_Application/Assets/TabIcons/home.png" Width="15" Height="15" />
             </TabItem.Header>
             <!-- TODO: Change to Grid instead of StackPanels -->
-            <StackPanel Orientation="Horizontal" Height="80" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" Height="80" VerticalAlignment="Top" Margin="50, 40, 50, 0">
                 <Image IsVisible="{Binding HomeViewModel.LeagueDataLoaded}" VerticalAlignment="Top" Height="80"
                        Width="80" asyncImageLoader:ImageLoader.Source="{Binding HomeViewModel.LeagueUserIconUrl}" />
                 <StackPanel Margin="15, 0, 0, 0" VerticalAlignment="Bottom" Spacing="-10">
@@ -68,7 +64,7 @@
                        RenderOptions.BitmapInterpolationMode="MediumQuality"
                        Source="avares://Desktop_Application/Assets/TabIcons/list.png" />
             </TabItem.Header>
-            <StackPanel>
+            <StackPanel Margin="50,40,50,0">
                 <TextBlock Text="Match history" FontSize="32" />
                 <controls:MatchHistoryGame MatchHistory="{Binding MatchHistoryViewModel.MatchHistory}" />
             </StackPanel>

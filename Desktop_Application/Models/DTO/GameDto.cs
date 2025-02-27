@@ -15,5 +15,6 @@ public record GameDto(
     string spell2,
     int Kills,
     int Deaths,
-    int Assists
+    int Assists,
+    double Kda
 );

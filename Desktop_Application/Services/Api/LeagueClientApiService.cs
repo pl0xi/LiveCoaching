@@ -177,13 +177,19 @@ public class LeagueClientApiService
                     var spell1IconUrl = _leagueWebApiService.GetSummonerSpellFileName(participant?.spell1Id ?? 4);
                     var spell2IconUrl = _leagueWebApiService.GetSummonerSpellFileName(participant?.spell2Id ?? 4);
 
+                    var calculatedKda = participant.stats.deaths == 0
+                        ? participant.stats.kills + participant.stats.assists
+                        : Math.Round(
+                            (float)(participant.stats.kills + participant.stats.assists) / participant.stats.deaths, 1);
+
                     var gameDto = new GameDto(game.gameId, mappedGameMode, gameTimeAgo, headerColorGradiant,
                         $"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/{participant?.championId}.png",
                         $"Level {participant.stats.champLevel}",
                         items, participant.stats.goldEarned,
                         $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/{spell1IconUrl}",
                         $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/{spell2IconUrl}",
-                        participant.stats.kills, participant.stats.deaths, participant.stats.assists);
+                        participant.stats.kills, participant.stats.deaths, participant.stats.assists,
+                        calculatedKda);
                     games.Add(gameDto);
                 }
                 catch (Exception e)
