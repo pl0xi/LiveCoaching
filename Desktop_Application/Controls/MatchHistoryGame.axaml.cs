@@ -41,7 +41,8 @@ public partial class MatchHistoryGame : UserControl
                     8999, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
                     2, 3, 1,
-                    2.0f
+                    2.0,
+                    1
                 ),
 
                 new(
@@ -71,7 +72,8 @@ public partial class MatchHistoryGame : UserControl
                     12034, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
                     2, 1, 5,
-                    3.1f
+                    3.1,
+                    18
                 ),
                 new(
                     1,
@@ -100,7 +102,8 @@ public partial class MatchHistoryGame : UserControl
                     12034, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
                     5, 0, 5,
-                    3.1f
+                    3.1,
+                    20
                 )
             };
     }

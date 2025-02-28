@@ -13,5 +13,6 @@ public record Stats(
     int goldEarned,
     int kills,
     int deaths,
-    int assists
+    int assists,
+    int visionScore
 );
