@@ -123,6 +123,12 @@
                                         <TabItem.Header>
                                             Damage
                                         </TabItem.Header>
+                                        <Grid RowDefinitions="Auto" ColumnDefinitions="Auto">
+                                            <TextBlock Grid.Row="0" Grid.Column="0">
+                                                <Run Text="Damage taken:" />
+                                                <Run Text="{Binding DamageTaken}" />
+                                            </TextBlock>
+                                        </Grid>
                                     </TabItem>
                                     <TabItem>
                                         <TabItem.Header>

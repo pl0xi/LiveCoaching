@@ -21,9 +21,7 @@ public partial class MatchHistoryGame : UserControl
             MatchHistory = new ObservableCollection<GameDto>
             {
                 new(
-                    1,
-                    "ARAM",
-                    "2 days ago",
+                    1, "ARAM", "2 days ago",
                     new ExpanderHeaderColorGradient(Color.Parse("#37D5D6"), Color.Parse("#35096D")),
                     "https://cdn.communitydragon.org/15.3.1/champion/113/square",
                     "Level 18",
@@ -40,15 +38,11 @@ public partial class MatchHistoryGame : UserControl
                     },
                     8999, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
-                    2, 3, 1,
-                    2.0,
-                    1
+                    2, 3, 1, 2.0, 1, 2123
                 ),
 
                 new(
-                    1,
-                    "URF",
-                    "3 days ago",
+                    1, "URF", "3 days ago",
                     new ExpanderHeaderColorGradient(Color.Parse("#dd1818"), Color.Parse("#333333")),
                     "https://cdn.communitydragon.org/15.3.1/champion/13/square",
                     "Level 12",
@@ -71,14 +65,10 @@ public partial class MatchHistoryGame : UserControl
                     },
                     12034, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
-                    2, 1, 5,
-                    3.1,
-                    18
+                    2, 1, 5, 3.1, 18, 12782
                 ),
                 new(
-                    1,
-                    "Summoners Rift 5v5",
-                    "3 days ago",
+                    1, "Summoners Rift 5v5", "3 days ago",
                     new ExpanderHeaderColorGradient(Color.Parse("#dd1818"), Color.Parse("#333333")),
                     "https://cdn.communitydragon.org/15.3.1/champion/81/square",
                     "Level 12",
@@ -101,9 +91,7 @@ public partial class MatchHistoryGame : UserControl
                     },
                     12034, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
-                    5, 0, 5,
-                    3.1,
-                    20
+                    5, 0, 5, 3.1, 20, 12782
                 )
             };
     }

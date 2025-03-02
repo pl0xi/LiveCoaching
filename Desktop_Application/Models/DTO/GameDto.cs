@@ -17,5 +17,6 @@ public record GameDto(
     int Deaths,
     int Assists,
     double Kda,
-    int VisionScore
+    int VisionScore,
+    int DamageTaken
 );
