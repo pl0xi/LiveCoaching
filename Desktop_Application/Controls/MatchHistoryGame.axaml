@@ -118,7 +118,18 @@
                                 </Grid>
                             </Expander.Header>
                             <StackPanel>
-                                <TextBlock> TODO </TextBlock>
+                                <TabControl TabStripPlacement="Left">
+                                    <TabItem>
+                                        <TabItem.Header>
+                                            Damage
+                                        </TabItem.Header>
+                                    </TabItem>
+                                    <TabItem>
+                                        <TabItem.Header>
+                                            Runes
+                                        </TabItem.Header>
+                                    </TabItem>
+                                </TabControl>
                             </StackPanel>
                         </Expander>
                     </DataTemplate>
