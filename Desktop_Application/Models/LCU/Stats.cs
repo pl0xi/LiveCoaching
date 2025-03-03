@@ -15,5 +15,6 @@ public record Stats(
     int deaths,
     int assists,
     int visionScore,
-    int totalDamageTaken
+    int totalDamageTaken,
+    int totalDamageDealt
 );
