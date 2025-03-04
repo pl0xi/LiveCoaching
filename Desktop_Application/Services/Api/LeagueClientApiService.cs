@@ -190,7 +190,7 @@ public class LeagueClientApiService
                         $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/{spell2IconUrl}",
                         participant.stats.kills, participant.stats.deaths, participant.stats.assists,
                         calculatedKda, participant.stats.visionScore, participant.stats.totalDamageTaken,
-                        participant.stats.totalDamageDealt);
+                        participant.stats.totalDamageDealt, participant.stats.damageDealtToObjectives);
                     games.Add(gameDto);
                 }
                 catch (Exception e)

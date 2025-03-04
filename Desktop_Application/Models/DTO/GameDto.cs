@@ -19,5 +19,6 @@ public record GameDto(
     double Kda,
     int VisionScore,
     int DamageTaken,
-    int DamageDealt
+    int DamageDealt,
+    int DamateDealtToObjectives
 );

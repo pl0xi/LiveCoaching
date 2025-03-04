@@ -16,5 +16,6 @@ public record Stats(
     int assists,
     int visionScore,
     int totalDamageTaken,
-    int totalDamageDealt
+    int totalDamageDealt,
+    int damageDealtToObjectives
 );
