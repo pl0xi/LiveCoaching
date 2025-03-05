@@ -182,6 +182,7 @@ public class LeagueClientApiService
                         : Math.Round(
                             (float)(participant.stats.kills + participant.stats.assists) / participant.stats.deaths, 1);
 
+                    // Create constructor parser for GameDto
                     var gameDto = new GameDto(game.gameId, mappedGameMode, gameTimeAgo, headerColorGradiant,
                         $"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/{participant?.championId}.png",
                         $"Level {participant.stats.champLevel}",
@@ -190,7 +191,8 @@ public class LeagueClientApiService
                         $"https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/{spell2IconUrl}",
                         participant.stats.kills, participant.stats.deaths, participant.stats.assists,
                         calculatedKda, participant.stats.visionScore, participant.stats.totalDamageTaken,
-                        participant.stats.totalDamageDealt, participant.stats.damageDealtToObjectives);
+                        participant.stats.totalDamageDealt, participant.stats.damageDealtToObjectives,
+                        participant.stats.damageDealtToTurrets);
                     games.Add(gameDto);
                 }
                 catch (Exception e)

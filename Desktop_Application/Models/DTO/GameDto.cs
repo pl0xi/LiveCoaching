@@ -20,5 +20,6 @@ public record GameDto(
     int VisionScore,
     int DamageTaken,
     int DamageDealt,
-    int DamateDealtToObjectives
+    int DamageDealtToObjectives,
+    int DamageDealtToTurrets
 );
