@@ -38,7 +38,7 @@ public partial class MatchHistoryGame : UserControl
                     },
                     8999, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
-                    2, 3, 1, 2.0, 1, 2123, 1900, 23232, 200
+                    2, 3, 1, 2.0, 1, 2123, 1900, 23232, 200, 2783
                 ),
 
                 new(
@@ -65,7 +65,7 @@ public partial class MatchHistoryGame : UserControl
                     },
                     12034, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
-                    2, 1, 5, 3.1, 18, 12782, 83222, 2000, 323
+                    2, 1, 5, 3.1, 18, 12782, 83222, 2000, 323, 500
                 ),
                 new(
                     1, "Summoners Rift 5v5", "3 days ago",
@@ -91,7 +91,7 @@ public partial class MatchHistoryGame : UserControl
                     },
                     12034, "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerFlash.png",
                     "https://ddragon.leagueoflegends.com/cdn/15.3.1/img/spell/SummonerTeleport.png",
-                    5, 0, 5, 3.1, 20, 12782, 123299, 32322, 322
+                    5, 0, 5, 3.1, 20, 12782, 123299, 32322, 322, 500
                 )
             };
     }
