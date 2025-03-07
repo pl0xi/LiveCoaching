@@ -123,7 +123,8 @@
                                         <TabItem.Header>
                                             Damage
                                         </TabItem.Header>
-                                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto">
+                                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
+                                              ColumnDefinitions="Auto">
                                             <TextBlock Grid.Row="0" Grid.Column="0">
                                                 <Run Text="Damage taken:" />
                                                 <Run Text="{Binding DamageTaken}" />
@@ -143,6 +144,10 @@
                                             <TextBlock Grid.Row="4" Grid.Column="0">
                                                 <Run Text="True Damage to champions:" />
                                                 <Run Text="{Binding TrueDamageDealt}" />
+                                            </TextBlock>
+                                            <TextBlock Grid.Row="5" Grid.Column="0">
+                                                <Run Text="Damage self mitigated:" />
+                                                <Run Text="{Binding DamageSelfMitigated}" />
                                             </TextBlock>
                                         </Grid>
                                     </TabItem>

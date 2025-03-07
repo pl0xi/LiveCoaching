@@ -19,5 +19,6 @@ public record Stats(
     int totalDamageDealt,
     int damageDealtToObjectives,
     int damageDealtToTurrets,
-    int trueDamageDealt
+    int trueDamageDealt,
+    int damageSelfMitigated
 );

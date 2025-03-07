@@ -192,7 +192,8 @@ public class LeagueClientApiService
                         participant.stats.kills, participant.stats.deaths, participant.stats.assists,
                         calculatedKda, participant.stats.visionScore, participant.stats.totalDamageTaken,
                         participant.stats.totalDamageDealt, participant.stats.damageDealtToObjectives,
-                        participant.stats.damageDealtToTurrets, participant.stats.trueDamageDealt);
+                        participant.stats.damageDealtToTurrets, participant.stats.trueDamageDealt,
+                        participant.stats.damageSelfMitigated);
                     games.Add(gameDto);
                 }
                 catch (Exception e)

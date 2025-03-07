@@ -22,5 +22,6 @@ public record GameDto(
     int DamageDealt,
     int DamageDealtToObjectives,
     int DamageDealtToTurrets,
-    int TrueDamageDealt
+    int TrueDamageDealt,
+    int DamageSelfMitigated
 );
