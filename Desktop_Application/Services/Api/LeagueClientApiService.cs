@@ -193,7 +193,7 @@ public class LeagueClientApiService
                         calculatedKda, participant.stats.visionScore, participant.stats.totalDamageTaken,
                         participant.stats.totalDamageDealt, participant.stats.damageDealtToObjectives,
                         participant.stats.damageDealtToTurrets, participant.stats.trueDamageDealt,
-                        participant.stats.damageSelfMitigated);
+                        participant.stats.damageSelfMitigated, participant.stats.magicDamageDealt);
                     games.Add(gameDto);
                 }
                 catch (Exception e)

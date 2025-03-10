@@ -20,5 +20,6 @@ public record Stats(
     int damageDealtToObjectives,
     int damageDealtToTurrets,
     int trueDamageDealt,
-    int damageSelfMitigated
+    int damageSelfMitigated,
+    int magicDamageDealt
 );

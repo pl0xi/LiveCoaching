@@ -123,7 +123,7 @@
                                         <TabItem.Header>
                                             Damage
                                         </TabItem.Header>
-                                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
+                                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                                               ColumnDefinitions="Auto">
                                             <TextBlock Grid.Row="0" Grid.Column="0">
                                                 <Run Text="Damage taken:" />
@@ -148,6 +148,10 @@
                                             <TextBlock Grid.Row="5" Grid.Column="0">
                                                 <Run Text="Damage self mitigated:" />
                                                 <Run Text="{Binding DamageSelfMitigated}" />
+                                            </TextBlock>
+                                            <TextBlock Grid.Row="6" Grid.Column="0">
+                                                <Run Text="Magic damage to champions:" />
+                                                <Run Text="{Binding MagicDamageDealt}" />
                                             </TextBlock>
                                         </Grid>
                                     </TabItem>
